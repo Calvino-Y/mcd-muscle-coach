@@ -1,0 +1,318 @@
+{
+  "mealCap": 45.0,
+  "kcalCap": 900.0,
+  "scenarios": [
+    {
+      "input": {
+        "weight": 72,
+        "factor": 1.8,
+        "consumed": 40,
+        "mode": "budget"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 72,
+        "factor": 1.8,
+        "consumed": 40,
+        "mode": "lean"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 60,
+        "factor": 1.6,
+        "consumed": 75,
+        "mode": "budget"
+      },
+      "mealProtein": 21,
+      "mealsNeeded": 1,
+      "budget": {
+        "items": [
+          "那么大鸡排x1"
+        ],
+        "totalPrice": 14.0,
+        "totalProtein": 24.0,
+        "totalKcal": 385
+      },
+      "lean": {
+        "items": [
+          "麦麦脆汁鸡-带骨里脊x1"
+        ],
+        "totalPrice": 15.0,
+        "totalProtein": 22.0,
+        "totalKcal": 332
+      }
+    },
+    {
+      "input": {
+        "weight": 60,
+        "factor": 1.6,
+        "consumed": 75,
+        "mode": "lean"
+      },
+      "mealProtein": 21,
+      "mealsNeeded": 1,
+      "budget": {
+        "items": [
+          "那么大鸡排x1"
+        ],
+        "totalPrice": 14.0,
+        "totalProtein": 24.0,
+        "totalKcal": 385
+      },
+      "lean": {
+        "items": [
+          "麦麦脆汁鸡-带骨里脊x1"
+        ],
+        "totalPrice": 15.0,
+        "totalProtein": 22.0,
+        "totalKcal": 332
+      }
+    },
+    {
+      "input": {
+        "weight": 80,
+        "factor": 2.2,
+        "consumed": 20,
+        "mode": "lean"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 4,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 80,
+        "factor": 2.2,
+        "consumed": 20,
+        "mode": "budget"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 4,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 55,
+        "factor": 1.4,
+        "consumed": 0,
+        "mode": "budget"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 95,
+        "factor": 2.0,
+        "consumed": 120,
+        "mode": "budget"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 68,
+        "factor": 2.4,
+        "consumed": 95,
+        "mode": "lean"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 100,
+        "factor": 1.6,
+        "consumed": 60,
+        "mode": "budget"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 3,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 50,
+        "factor": 2.0,
+        "consumed": 30,
+        "mode": "lean"
+      },
+      "mealProtein": 45.0,
+      "mealsNeeded": 2,
+      "budget": {
+        "items": [
+          "那么大鸡排x2"
+        ],
+        "totalPrice": 28.0,
+        "totalProtein": 48.0,
+        "totalKcal": 770
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x3"
+        ],
+        "totalPrice": 48.0,
+        "totalProtein": 51.0,
+        "totalKcal": 576
+      }
+    },
+    {
+      "input": {
+        "weight": 88,
+        "factor": 1.7,
+        "consumed": 145,
+        "mode": "budget"
+      },
+      "mealProtein": 5,
+      "mealsNeeded": 1,
+      "budget": {
+        "items": [
+          "麦乐鸡5块x1"
+        ],
+        "totalPrice": 14.0,
+        "totalProtein": 12.0,
+        "totalKcal": 213
+      },
+      "lean": {
+        "items": [
+          "薄皮焦香V翅x1"
+        ],
+        "totalPrice": 16.0,
+        "totalProtein": 17.0,
+        "totalKcal": 192
+      }
+    }
+  ]
+}

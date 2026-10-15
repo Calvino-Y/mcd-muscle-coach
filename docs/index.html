@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麦门增肌师 · 在麦当劳增肌，一克蛋白质最低只要 ¥0.58</title>
+<meta name="description" content="基于麦当劳 MCP 官方营养数据，计算在你的蛋白质缺口下，麦当劳里最省钱/最清淡的补齐方案。">
+<style>
+:root{
+  --bg:#0a0a0b; --surface:#141416; --surface-2:#1c1c1f; --line:rgba(255,255,255,.09);
+  --text:#f4f4f6; --muted:#98989f; --dim:#6b6b73;
+  --red:#da291c; --yellow:#ffc72c; --green:#3ecf8e;
+  --radius:16px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"SF Mono",ui-monospace,"Cascadia Mono","Roboto Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text); font-family:var(--sans);
+  line-height:1.65; font-size:15px; -webkit-font-smoothing:antialiased;
+  padding:0 20px 80px;
+}
+.wrap{max-width:1080px;margin:0 auto}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- hero ---------- */
+header{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:5px 13px;margin-bottom:26px;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--yellow)}
+h1{font-size:clamp(30px,5.4vw,52px);line-height:1.16;font-weight:600;letter-spacing:-.02em}
+h1 .hl{
+  background:linear-gradient(180deg,transparent 62%,rgba(255,199,44,.28) 62%);
+  padding:0 2px;
+}
+h1 .price{color:var(--yellow);font-family:var(--mono);white-space:nowrap}
+.lede{margin-top:22px;max-width:660px;font-size:16px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:40px}
+.stat{background:var(--surface);padding:20px 22px}
+.stat .k{font-size:12px;color:var(--dim);letter-spacing:.02em}
+.stat .v{font-size:29px;font-weight:600;letter-spacing:-.02em;margin-top:6px;line-height:1.2}
+.stat .v small{font-size:14px;font-weight:400;color:var(--muted);margin-left:3px}
+
+/* ---------- section ---------- */
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+.sec-head{margin-bottom:34px}
+.sec-tag{font-size:12px;color:var(--yellow);letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+h2{font-size:clamp(22px,3.2vw,30px);font-weight:600;letter-spacing:-.015em;margin-top:10px}
+.sec-head p{color:var(--muted);margin-top:10px;max-width:640px;font-size:14.5px}
+
+/* ---------- calculator ---------- */
+.calc{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:860px){.calc{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+.field label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--muted);margin-bottom:9px}
+.field label b{color:var(--text);font-family:var(--mono);font-size:15px;font-weight:600}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;
+  background:var(--surface-2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--yellow);cursor:pointer;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--yellow)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--yellow);
+  cursor:pointer;border:3px solid var(--bg)}
+.seg{display:flex;gap:6px;background:var(--surface-2);border-radius:10px;padding:4px}
+.seg button{flex:1;background:transparent;border:0;color:var(--muted);font-family:inherit;font-size:13.5px;
+  padding:9px 6px;border-radius:7px;cursor:pointer;transition:.15s;font-weight:500}
+.seg button.on{background:var(--text);color:#0a0a0b}
+.hint{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.55}
+
+.plan-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.plan-head .big{font-size:15px;color:var(--muted)}
+.plan-head .big b{color:var(--yellow);font-family:var(--mono);font-size:20px}
+.rows{display:flex;flex-direction:column;gap:9px}
+.row{display:flex;align-items:center;gap:14px;background:var(--surface-2);border-radius:11px;padding:13px 16px}
+.row .q{font-family:var(--mono);font-size:13px;color:var(--yellow);background:rgba(255,199,44,.11);
+  border-radius:6px;padding:2px 8px;flex-shrink:0}
+.row .nm{flex:1;min-width:0;font-size:14.5px}
+.row .mt{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.row .mt b{color:var(--text);font-weight:600}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-top:16px}
+.totals div{background:var(--surface-2);padding:13px 14px}
+.totals .k{font-size:11.5px;color:var(--dim)}
+.totals .v{font-size:17px;font-weight:600;font-family:var(--mono);margin-top:2px}
+.vs{margin-top:20px;border-top:1px dashed var(--line);padding-top:18px}
+.vs .t{font-size:12.5px;color:var(--dim);margin-bottom:11px}
+.vs .opt{display:flex;align-items:center;gap:12px;font-size:13.5px;padding:9px 0}
+.vs .opt .tag{font-size:11.5px;padding:3px 9px;border-radius:6px;flex-shrink:0;font-weight:500}
+.vs .opt.a .tag{background:rgba(218,41,28,.16);color:#ff8a7a}
+.vs .opt.b .tag{background:rgba(62,207,142,.14);color:var(--green)}
+.vs .opt .d{margin-left:auto;font-family:var(--mono);color:var(--muted);font-size:13px;text-align:right}
+.vs .note{margin-top:8px;font-size:12.5px;color:var(--muted);
+  background:rgba(255,199,44,.07);border-left:2px solid var(--yellow);border-radius:0 8px 8px 0;padding:10px 14px}
+
+/* ---------- ranking ---------- */
+.ranks{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:820px){.ranks{grid-template-columns:1fr}}
+.rank h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.rank .sub{font-size:12.5px;color:var(--dim);margin-bottom:18px}
+.bar{margin-bottom:13px}
+.bar .lbl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;gap:10px}
+.bar .lbl span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .lbl b{font-family:var(--mono);color:var(--yellow);font-weight:600;flex-shrink:0}
+.track{height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.fill{height:100%;border-radius:4px;background:var(--yellow);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.fill.alt{background:var(--red)}
+
+/* ---------- scatter ---------- */
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px 16px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:14px;padding-left:4px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+/* ---------- callout ---------- */
+.callout{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;
+  background:linear-gradient(135deg,rgba(218,41,28,.14),rgba(255,199,44,.07));
+  border:1px solid rgba(255,199,44,.22);border-radius:var(--radius);padding:26px 28px;margin-top:34px}
+.callout .ratio{font-family:var(--mono);font-size:40px;font-weight:600;color:var(--yellow);line-height:1;white-space:nowrap}
+.callout .ratio small{display:block;font-size:11.5px;color:var(--muted);font-family:var(--sans);font-weight:400;margin-top:7px;letter-spacing:.02em}
+.callout h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.callout p{font-size:13.5px;color:var(--muted)}
+@media(max-width:600px){.callout{grid-template-columns:1fr;gap:14px}}
+
+/* ---------- footer ---------- */
+footer{padding:52px 0 0;font-size:13px;color:var(--dim)}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:28px;margin-bottom:30px}
+footer h4{font-size:12.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:11px;font-weight:500}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+footer code{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface-2);
+  padding:2px 6px;border-radius:5px}
+.disc{border-top:1px solid var(--line);padding-top:22px;color:var(--dim);font-size:12.5px;line-height:1.75}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow"><span class="dot"></span>麦当劳程序员创意开发大赛参赛作品 · 基于麦当劳 MCP 官方数据</div>
+  <h1>在麦当劳增肌，<br>一克蛋白质最低只要 <span class="price">¥0.58</span></h1>
+  <p class="lede">
+    我们把麦当劳 <b id="hTotal"></b> 项餐品的官方营养成分和实时菜单价格全部拉下来跑了一遍。
+    结论是：增肌不必只吃水煮鸡胸——麦门里藏着比很多健身餐更划算的蛋白质。
+    只要你说清楚「今天还差多少克蛋白」，我们就能算出这一顿该怎么点。
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="k">最高蛋白性价比</div><div class="v num" id="sBest">–<small>g/元</small></div></div>
+    <div class="stat"><div class="k">最高蛋白密度</div><div class="v num" id="sDens">–<small>g/100kcal</small></div></div>
+    <div class="stat"><div class="k">每克蛋白最低成本</div><div class="v num" id="sCost">–</div></div>
+    <div class="stat"><div class="k">已采集真实价格</div><div class="v num" id="sPriced">–<small>项</small></div></div>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-tag">Protein Gap Solver</div>
+    <h2>你今天还差多少蛋白质？</h2>
+    <p>拖动滑块，实时求解。同一份缺口会给出两种解法：最省钱的和最清淡的——你选一个。</p>
+  </div>
+  <div class="calc">
+    <div class="panel">
+      <div class="field">
+        <label>体重 <b><span id="vWeight">72</span> kg</b></label>
+        <input type="range" id="weight" min="40" max="120" step="1" value="72">
+      </div>
+      <div class="field">
+        <label>每日蛋白目标 <b><span id="vFactor">1.8</span> g/kg</b></label>
+        <input type="range" id="factor" min="1.2" max="2.4" step="0.1" value="1.8">
+        <div class="hint">休息日 1.6 · 训练日 2.0～2.2 · 增肌期冲击 2.4</div>
+      </div>
+      <div class="field">
+        <label>今天已经吃进去 <b><span id="vConsumed">40</span> g</b></label>
+        <input type="range" id="consumed" min="0" max="200" step="5" value="40">
+      </div>
+      <div class="field">
+        <label>偏好</label>
+        <div class="seg" id="modeSeg">
+          <button data-mode="budget" class="on">最省钱</button>
+          <button data-mode="lean">最清淡</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="plan-head">
+        <div class="big">本餐补 <b id="oMeal">–</b> g 蛋白 · 全天还差 <b id="oRemain">–</b> g</div>
+        <div class="hint" id="oMeals" style="margin:0"></div>
+      </div>
+      <div class="rows" id="oRows"></div>
+      <div class="totals" id="oTotals"></div>
+      <div class="vs" id="oVs"></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ratio" id="cRatio">–<small>蛋白密度 g/100kcal</small></div>
+    <div>
+      <h3 id="cName">–</h3>
+      <p id="cDesc"></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-tag">Leaderboard</div>
+    <h2>两张排行榜，两种「划算」</h2>
+    <p>左边看「每一百大卡能换多少蛋白质」——增肌不想增脂就看它；右边看「每一块钱能换多少蛋白质」——预算有限就看它。</p>
+  </div>
+  <div class="ranks">
+    <div class="panel rank">
+      <h3>蛋白密度榜</h3>
+      <div class="sub">g 蛋白 / 100 kcal · 仅统计蛋白 ≥ 8 g 的餐品，避免饮料的数学噪声</div>
+      <div id="rankDensity"></div>
+    </div>
+    <div class="panel rank">
+      <h3>蛋白性价比榜</h3>
+      <div class="sub">g 蛋白 / 元 · 仅含已采集到真实菜单价格的餐品</div>
+      <div id="rankValue"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-tag">Trade-off</div>
+    <h2>蛋白质和热量，从来不是一回事</h2>
+    <p>同样是一份能给你 20 克以上蛋白质的餐品，热量可能差 3 倍。右下角那些点很便宜，但热量也高；左上角的点贵一些，却几乎没有额外负担。</p>
+  </div>
+  <div class="chartbox">
+    <svg id="scatter" viewBox="0 0 900 460" role="img" aria-label="餐品蛋白质与热量分布散点图"></svg>
+    <div class="legend">
+      <span><i style="background:var(--yellow)"></i>高蛋白密度（≥8 g/100kcal）</span>
+      <span><i style="background:var(--muted)"></i>普通餐品</span>
+      <span><i style="background:var(--red)"></i>已采集真实价格 · 可参与成本优化</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="cols">
+    <div>
+      <h4>数据来源</h4>
+      <ul>
+        <li>营养成分 <code>list-nutrition-foods</code></li>
+        <li>实时菜单与价格 <code>query-meals</code></li>
+        <li>门店 麦当劳成都万达餐厅</li>
+        <li>采样日期 <span class="num">2026-10-15</span></li>
+      </ul>
+    </div>
+    <div>
+      <h4>计算方法</h4>
+      <ul>
+        <li>蛋白密度 = 蛋白 ÷ 热量 × 100</li>
+        <li>蛋白性价比 = 蛋白 ÷ 价格</li>
+        <li>最优组合 = 有约束的穷举搜索</li>
+        <li>单餐上限 45 g 蛋白 / 900 kcal</li>
+      </ul>
+    </div>
+    <div>
+      <h4>如何自己跑一遍</h4>
+      <ul>
+        <li><code>pip install -r requirements.txt</code></li>
+        <li><code>export MCD_MCP_TOKEN=...</code></li>
+        <li><code>python scripts/coach.py --weight 72</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="disc">
+    <p><b>免责声明</b>：本项目为麦当劳程序员节创意开发大赛参赛作品，由参赛者独立开发，非麦当劳官方产品。页面中的蛋白质目标参考运动营养学通行区间（1.6–2.2 g/kg 体重），输出仅供参考，<b>不构成医疗或营养建议</b>；餐品信息、价格及供应状态以麦当劳官方渠道的实时结果为准。</p>
+    <p style="margin-top:9px">营养与价格数据均来自麦当劳 MCP 服务的真实返回，未做任何人工修饰。价格随门店与活动变化，请以点单时为准。</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const DATA = {"source":{"nutritionTool":"list-nutrition-foods","priceTool":"query-meals","store":{"storeCode":"3450032","storeName":"麦当劳成都万达餐厅","beType":1},"capturedAt":"2026-10-15","totalItems":158},"items":[{"name":"猪柳麦满分","code":null,"category":"breakfast","energyKcal":308.0,"protein":16.0,"fat":16.0,"carbs":24.0,"sodium":781.0,"calcium":213.0,"price":null,"proteinPer100kcal":5.19,"proteinPerYuan":null,"proteinSource":true},{"name":"猪柳蛋麦满分","code":null,"category":"breakfast","energyKcal":387.0,"protein":23.0,"fat":21.0,"carbs":25.0,"sodium":846.0,"calcium":243.0,"price":null,"proteinPer100kcal":5.94,"proteinPerYuan":null,"proteinSource":true},{"name":"烟肉蛋麦满分","code":null,"category":"breakfast","energyKcal":260.0,"protein":16.0,"fat":10.0,"carbs":24.0,"sodium":483.0,"calcium":238.0,"price":null,"proteinPer100kcal":6.15,"proteinPerYuan":null,"proteinSource":true},{"name":"火腿扒麦满分","code":null,"category":"breakfast","energyKcal":261.0,"protein":14.0,"fat":12.0,"carbs":24.0,"sodium":608.0,"calcium":131.0,"price":null,"proteinPer100kcal":5.36,"proteinPerYuan":null,"proteinSource":true},{"name":"中薯条","code":"4810","category":"side","energyKcal":289.0,"protein":4.0,"fat":12.0,"carbs":38.0,"sodium":165.0,"calcium":18.0,"price":13.5,"proteinPer100kcal":1.38,"proteinPerYuan":0.3,"proteinSource":false},{"name":"大薯条","code":null,"category":"side","energyKcal":379.0,"protein":6.0,"fat":16.0,"carbs":50.0,"sodium":216.0,"calcium":23.0,"price":null,"proteinPer100kcal":1.58,"proteinPerYuan":null,"proteinSource":false},{"name":"小薯条","code":null,"category":"side","energyKcal":210.0,"protein":3.0,"fat":9.0,"carbs":28.0,"sodium":120.0,"calcium":13.0,"price":null,"proteinPer100kcal":1.43,"proteinPerYuan":null,"proteinSource":false},{"name":"迷你薯条","code":null,"category":"side","energyKcal":106.0,"protein":2.0,"fat":4.0,"carbs":14.0,"sodium":61.0,"calcium":6.0,"price":null,"proteinPer100kcal":1.89,"proteinPerYuan":null,"proteinSource":false},{"name":"圆筒冰淇淋","code":"515837","category":"dessert","energyKcal":93.0,"protein":2.0,"fat":3.0,"carbs":14.0,"sodium":36.0,"calcium":77.0,"price":5.0,"proteinPer100kcal":2.15,"proteinPerYuan":0.4,"proteinSource":false},{"name":"麦乐鸡5块","code":"1401","category":"chicken","energyKcal":213.0,"protein":12.0,"fat":12.0,"carbs":13.0,"sodium":422.0,"calcium":9.0,"price":14.0,"proteinPer100kcal":5.63,"proteinPerYuan":0.86,"proteinSource":true},{"name":"大杯玉米杯","code":"4437","category":"side","energyKcal":87.0,"protein":4.0,"fat":1.0,"carbs":12.0,"sodium":2.0,"calcium":10.0,"price":13.0,"proteinPer100kcal":4.6,"proteinPerYuan":0.31,"proteinSource":false},{"name":"小杯玉米杯","code":null,"category":"side","energyKcal":53.0,"protein":2.0,"fat":1.0,"carbs":7.0,"sodium":1.0,"calcium":6.0,"price":null,"proteinPer100kcal":3.77,"proteinPerYuan":null,"proteinSource":false},{"name":"麦辣鸡翅-2块","code":"1700","category":"chicken","energyKcal":224.0,"protein":13.0,"fat":15.0,"carbs":9.0,"sodium":537.0,"calcium":13.0,"price":15.0,"proteinPer100kcal":5.8,"proteinPerYuan":0.87,"proteinSource":true},{"name":"朱古力新地","code":null,"category":"drink","energyKcal":282.0,"protein":5.0,"fat":9.0,"carbs":44.0,"sodium":126.0,"calcium":182.0,"price":null,"proteinPer100kcal":1.77,"proteinPerYuan":null,"proteinSource":false},{"name":"草莓新地","code":"9900008745","category":"dessert","energyKcal":245.0,"protein":4.0,"fat":6.0,"carbs":43.0,"sodium":84.0,"calcium":158.0,"price":12.0,"proteinPer100kcal":1.63,"proteinPerYuan":0.33,"proteinSource":false},{"name":"奥利奥麦旋风","code":"9900008754","category":"dessert","energyKcal":266.0,"protein":5.0,"fat":9.0,"carbs":40.0,"sodium":116.0,"calcium":185.0,"price":15.5,"proteinPer100kcal":1.88,"proteinPerYuan":0.32,"proteinSource":false},{"name":"草莓麦旋风","code":null,"category":"dessert","energyKcal":295.0,"protein":6.0,"fat":9.0,"carbs":47.0,"sodium":122.0,"calcium":186.0,"price":null,"proteinPer100kcal":2.03,"proteinPerYuan":null,"proteinSource":false},{"name":"香芋派","code":null,"category":"dessert","energyKcal":232.0,"protein":2.0,"fat":12.0,"carbs":28.0,"sodium":159.0,"calcium":7.0,"price":null,"proteinPer100kcal":0.86,"proteinPerYuan":null,"proteinSource":false},{"name":"菠萝派","code":null,"category":"dessert","energyKcal":221.0,"protein":2.0,"fat":11.0,"carbs":27.0,"sodium":147.0,"calcium":5.0,"price":null,"proteinPer100kcal":0.9,"proteinPerYuan":null,"proteinSource":false},{"name":"大脆鸡扒麦满分","code":null,"category":"breakfast","energyKcal":361.0,"protein":16.0,"fat":17.0,"carbs":35.0,"sodium":804.0,"calcium":130.0,"price":null,"proteinPer100kcal":4.43,"proteinPerYuan":null,"proteinSource":true},{"name":"原味板烧鸡腿麦满分","code":null,"category":"breakfast","energyKcal":246.0,"protein":15.0,"fat":9.0,"carbs":25.0,"sodium":611.0,"calcium":133.0,"price":null,"proteinPer100kcal":6.1,"proteinPerYuan":null,"proteinSource":true},{"name":"双层原味板烧鸡腿麦满分","code":null,"category":"breakfast","energyKcal":355.0,"protein":23.0,"fat":17.0,"carbs":27.0,"sodium":984.0,"calcium":138.0,"price":null,"proteinPer100kcal":6.48,"proteinPerYuan":null,"proteinSource":true},{"name":"吉士汉堡包","code":null,"category":"burger","energyKcal":294.0,"protein":16.0,"fat":12.0,"carbs":30.0,"sodium":673.0,"calcium":144.0,"price":null,"proteinPer100kcal":5.44,"proteinPerYuan":null,"proteinSource":true},{"name":"双层吉士汉堡","code":"1120","category":"burger","energyKcal":429.0,"protein":27.0,"fat":22.0,"carbs":31.0,"sodium":1017.0,"calcium":232.0,"price":23.0,"proteinPer100kcal":6.29,"proteinPerYuan":1.17,"proteinSource":true},{"name":"麦香鸡","code":"1450","category":"chicken","energyKcal":369.0,"protein":15.0,"fat":17.0,"carbs":39.0,"sodium":731.0,"calcium":73.0,"price":17.0,"proteinPer100kcal":4.07,"proteinPerYuan":0.88,"proteinSource":true},{"name":"麦香鱼","code":"1600","category":"other","energyKcal":325.0,"protein":16.0,"fat":13.0,"carbs":35.0,"sodium":556.0,"calcium":99.0,"price":22.5,"proteinPer100kcal":4.92,"proteinPerYuan":0.71,"proteinSource":true},{"name":"麦辣鸡腿汉堡","code":"1440","category":"chicken","energyKcal":485.0,"protein":24.0,"fat":24.0,"carbs":42.0,"sodium":1208.0,"calcium":154.0,"price":22.5,"proteinPer100kcal":4.95,"proteinPerYuan":1.07,"proteinSource":true},{"name":"板烧鸡腿堡","code":"1406","category":"chicken","energyKcal":391.0,"protein":23.0,"fat":17.0,"carbs":35.0,"sodium":1041.0,"calcium":93.0,"price":23.5,"proteinPer100kcal":5.88,"proteinPerYuan":0.98,"proteinSource":true},{"name":"巨无霸","code":"1100","category":"other","energyKcal":513.0,"protein":27.0,"fat":26.0,"carbs":42.0,"sodium":961.0,"calcium":171.0,"price":25.5,"proteinPer100kcal":5.26,"proteinPerYuan":1.06,"proteinSource":true},{"name":"培根蔬萃双层牛堡","code":"1106","category":"burger","energyKcal":442.0,"protein":24.0,"fat":23.0,"carbs":34.0,"sodium":728.0,"calcium":73.0,"price":24.5,"proteinPer100kcal":5.43,"proteinPerYuan":0.98,"proteinSource":true},{"name":"可乐中杯","code":"9900008751","category":"drink","energyKcal":147.0,"protein":0.0,"fat":0.0,"carbs":36.0,"sodium":0.0,"calcium":10.0,"price":9.5,"proteinPer100kcal":0.0,"proteinPerYuan":0.0,"proteinSource":false},{"name":"可乐大杯","code":null,"category":"drink","energyKcal":224.0,"protein":0.0,"fat":0.0,"carbs":55.0,"sodium":0.0,"calcium":15.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"可乐小杯","code":null,"category":"drink","energyKcal":107.0,"protein":0.0,"fat":0.0,"carbs":26.0,"sodium":0.0,"calcium":7.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"雪碧中杯","code":"3010","category":"drink","energyKcal":105.0,"protein":0.0,"fat":0.0,"carbs":26.0,"sodium":29.0,"calcium":0.0,"price":9.5,"proteinPer100kcal":0.0,"proteinPerYuan":0.0,"proteinSource":false},{"name":"雪碧大杯","code":null,"category":"drink","energyKcal":160.0,"protein":0.0,"fat":0.0,"carbs":39.0,"sodium":45.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"雪碧小杯","code":null,"category":"drink","energyKcal":76.0,"protein":0.0,"fat":0.0,"carbs":19.0,"sodium":21.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"无糖可口可乐中杯","code":null,"category":"drink","energyKcal":0.0,"protein":0.0,"fat":0.0,"carbs":1.0,"sodium":35.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"无糖可口可乐大杯","code":null,"category":"drink","energyKcal":0.0,"protein":0.0,"fat":0.0,"carbs":1.0,"sodium":53.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"无糖可口可乐小杯","code":null,"category":"drink","energyKcal":0.0,"protein":0.0,"fat":0.0,"carbs":0.0,"sodium":25.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"大杯鲜萃咖啡","code":null,"category":"drink","energyKcal":13.0,"protein":1.0,"fat":0.0,"carbs":0.0,"sodium":3.0,"calcium":8.0,"price":null,"proteinPer100kcal":7.69,"proteinPerYuan":null,"proteinSource":false},{"name":"小杯鲜萃咖啡","code":"520689","category":"drink","energyKcal":15.0,"protein":1.0,"fat":0.0,"carbs":3.0,"sodium":2.0,"calcium":6.0,"price":9.5,"proteinPer100kcal":6.67,"proteinPerYuan":0.11,"proteinSource":false},{"name":"锡兰红茶","code":null,"category":"drink","energyKcal":2.0,"protein":0.0,"fat":0.0,"carbs":0.0,"sodium":0.0,"calcium":5.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"热朱古力","code":null,"category":"drink","energyKcal":125.0,"protein":2.0,"fat":2.0,"carbs":22.0,"sodium":107.0,"calcium":36.0,"price":null,"proteinPer100kcal":1.6,"proteinPerYuan":null,"proteinSource":false},{"name":"纯牛奶（盒装）","code":"3755","category":"drink","energyKcal":129.0,"protein":7.0,"fat":7.0,"carbs":10.0,"sodium":73.0,"calcium":231.0,"price":10.5,"proteinPer100kcal":5.43,"proteinPerYuan":0.67,"proteinSource":false},{"name":"麦旋酷阳光橙","code":null,"category":"drink","energyKcal":228.0,"protein":1.0,"fat":2.0,"carbs":50.0,"sodium":77.0,"calcium":52.0,"price":null,"proteinPer100kcal":0.44,"proteinPerYuan":null,"proteinSource":false},{"name":"浓缩咖啡","code":null,"category":"drink","energyKcal":13.0,"protein":1.0,"fat":0.0,"carbs":2.0,"sodium":0.0,"calcium":7.0,"price":null,"proteinPer100kcal":7.69,"proteinPerYuan":null,"proteinSource":false},{"name":"那么大鸡排","code":"521156","category":"chicken","energyKcal":385.0,"protein":24.0,"fat":21.0,"carbs":24.0,"sodium":996.0,"calcium":13.0,"price":14.0,"proteinPer100kcal":6.23,"proteinPerYuan":1.71,"proteinSource":true},{"name":"阳光柠檬红茶中杯","code":null,"category":"drink","energyKcal":117.0,"protein":0.0,"fat":0.0,"carbs":29.0,"sodium":17.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"阳光柠檬红茶大杯","code":null,"category":"drink","energyKcal":178.0,"protein":0.0,"fat":0.0,"carbs":43.0,"sodium":25.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"阳光柠檬红茶小杯","code":null,"category":"drink","energyKcal":85.0,"protein":0.0,"fat":0.0,"carbs":21.0,"sodium":12.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"脆薯饼","code":null,"category":"breakfast","energyKcal":146.0,"protein":1.0,"fat":9.0,"carbs":14.0,"sodium":311.0,"calcium":7.0,"price":null,"proteinPer100kcal":0.68,"proteinPerYuan":null,"proteinSource":false},{"name":"脆香油条","code":null,"category":"breakfast","energyKcal":202.0,"protein":5.0,"fat":12.0,"carbs":19.0,"sodium":230.0,"calcium":18.0,"price":null,"proteinPer100kcal":2.48,"proteinPerYuan":null,"proteinSource":false},{"name":"100%苹果汁","code":"6362","category":"drink","energyKcal":88.0,"protein":0.0,"fat":0.0,"carbs":21.0,"sodium":0.0,"calcium":0.0,"price":11.5,"proteinPer100kcal":0.0,"proteinPerYuan":0.0,"proteinSource":false},{"name":"汉堡包","code":null,"category":"burger","energyKcal":248.0,"protein":13.0,"fat":8.0,"carbs":29.0,"sodium":492.0,"calcium":61.0,"price":null,"proteinPer100kcal":5.24,"proteinPerYuan":null,"proteinSource":true},{"name":"麦乐鸡4块","code":null,"category":"chicken","energyKcal":170.0,"protein":10.0,"fat":10.0,"carbs":11.0,"sodium":337.0,"calcium":7.0,"price":null,"proteinPer100kcal":5.88,"proteinPerYuan":null,"proteinSource":true},{"name":"纯悦","code":null,"category":"drink","energyKcal":0.0,"protein":0.0,"fat":0.0,"carbs":0.0,"sodium":0.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"苹果片","code":"6102","category":"side","energyKcal":32.0,"protein":0.0,"fat":0.0,"carbs":7.0,"sodium":0.0,"calcium":18.0,"price":7.0,"proteinPer100kcal":0.0,"proteinPerYuan":0.0,"proteinSource":false},{"name":"不素之霸双层牛堡","code":"4648","category":"burger","energyKcal":493.0,"protein":28.0,"fat":27.0,"carbs":34.0,"sodium":1012.0,"calcium":75.0,"price":26.5,"proteinPer100kcal":5.68,"proteinPerYuan":1.06,"proteinSource":true},{"name":"双层深海鳕鱼堡","code":"9900003586","category":"chicken","energyKcal":485.0,"protein":28.0,"fat":21.0,"carbs":46.0,"sodium":917.0,"calcium":147.0,"price":24.0,"proteinPer100kcal":5.77,"proteinPerYuan":1.17,"proteinSource":true},{"name":"儿童鱼排堡","code":null,"category":"burger","energyKcal":269.0,"protein":15.0,"fat":6.0,"carbs":36.0,"sodium":442.0,"calcium":58.0,"price":null,"proteinPer100kcal":5.58,"proteinPerYuan":null,"proteinSource":true},{"name":"培根安格斯厚牛堡","code":null,"category":"burger","energyKcal":707.0,"protein":34.0,"fat":44.0,"carbs":43.0,"sodium":1037.0,"calcium":161.0,"price":null,"proteinPer100kcal":4.81,"proteinPerYuan":null,"proteinSource":true},{"name":"芝士安格斯厚牛堡","code":null,"category":"burger","energyKcal":696.0,"protein":32.0,"fat":44.0,"carbs":43.0,"sodium":897.0,"calcium":150.0,"price":null,"proteinPer100kcal":4.6,"proteinPerYuan":null,"proteinSource":true},{"name":"yeyeyeye奶冻款","code":null,"category":"other","energyKcal":223.0,"protein":1.0,"fat":4.0,"carbs":43.0,"sodium":37.0,"calcium":64.0,"price":null,"proteinPer100kcal":0.45,"proteinPerYuan":null,"proteinSource":false},{"name":"皮蛋鸡肉粥","code":null,"category":"breakfast","energyKcal":133.0,"protein":6.0,"fat":3.0,"carbs":20.0,"sodium":611.0,"calcium":20.0,"price":null,"proteinPer100kcal":4.51,"proteinPerYuan":null,"proteinSource":false},{"name":"雪菜脆笋鸡肉粥","code":null,"category":"breakfast","energyKcal":120.0,"protein":4.0,"fat":2.0,"carbs":22.0,"sodium":552.0,"calcium":14.0,"price":null,"proteinPer100kcal":3.33,"proteinPerYuan":null,"proteinSource":false},{"name":"猪柳炒双蛋堡","code":null,"category":"breakfast","energyKcal":437.0,"protein":25.0,"fat":24.0,"carbs":29.0,"sodium":705.0,"calcium":116.0,"price":null,"proteinPer100kcal":5.72,"proteinPerYuan":null,"proteinSource":true},{"name":"yeyeyeye爆珠款","code":null,"category":"other","energyKcal":212.0,"protein":1.0,"fat":3.0,"carbs":42.0,"sodium":122.0,"calcium":124.0,"price":null,"proteinPer100kcal":0.47,"proteinPerYuan":null,"proteinSource":false},{"name":"柠檬拉明顿","code":null,"category":"dessert","energyKcal":121.0,"protein":2.0,"fat":7.0,"carbs":12.0,"sodium":35.0,"calcium":17.0,"price":null,"proteinPer100kcal":1.65,"proteinPerYuan":null,"proteinSource":false},{"name":"芝士双层安格斯厚牛堡","code":null,"category":"burger","energyKcal":1003.0,"protein":58.0,"fat":65.0,"carbs":46.0,"sodium":1373.0,"calcium":251.0,"price":null,"proteinPer100kcal":5.78,"proteinPerYuan":null,"proteinSource":true},{"name":"培根双层安格斯厚牛堡","code":null,"category":"burger","energyKcal":987.0,"protein":55.0,"fat":64.0,"carbs":46.0,"sodium":1191.0,"calcium":226.0,"price":null,"proteinPer100kcal":5.57,"proteinPerYuan":null,"proteinSource":true},{"name":"火腿扒早安营养卷","code":null,"category":"breakfast","energyKcal":444.0,"protein":16.0,"fat":24.0,"carbs":39.0,"sodium":1065.0,"calcium":108.0,"price":null,"proteinPer100kcal":3.6,"proteinPerYuan":null,"proteinSource":true},{"name":"麦麦脆汁鸡-琵琶腿","code":null,"category":"chicken","energyKcal":328.0,"protein":21.0,"fat":20.0,"carbs":16.0,"sodium":905.0,"calcium":24.0,"price":null,"proteinPer100kcal":6.4,"proteinPerYuan":null,"proteinSource":true},{"name":"德式图林根香肠","code":null,"category":"chicken","energyKcal":87.0,"protein":5.0,"fat":6.0,"carbs":2.0,"sodium":293.0,"calcium":5.0,"price":null,"proteinPer100kcal":5.75,"proteinPerYuan":null,"proteinSource":false},{"name":"图林根香肠早安营养卷","code":null,"category":"breakfast","energyKcal":425.0,"protein":14.0,"fat":23.0,"carbs":38.0,"sodium":977.0,"calcium":68.0,"price":null,"proteinPer100kcal":3.29,"proteinPerYuan":null,"proteinSource":true},{"name":"麦麦脆汁鸡-带骨里脊","code":"9900005432","category":"chicken","energyKcal":332.0,"protein":22.0,"fat":18.0,"carbs":16.0,"sodium":812.0,"calcium":25.0,"price":15.0,"proteinPer100kcal":6.63,"proteinPerYuan":1.47,"proteinSource":true},{"name":"【美汁源】“黄金橙橙”","code":null,"category":"other","energyKcal":165.0,"protein":0.0,"fat":0.0,"carbs":41.0,"sodium":53.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"优品豆浆大杯","code":null,"category":"drink","energyKcal":202.0,"protein":8.0,"fat":4.0,"carbs":33.0,"sodium":43.0,"calcium":21.0,"price":null,"proteinPer100kcal":3.96,"proteinPerYuan":null,"proteinSource":true},{"name":"优品豆浆小杯","code":null,"category":"drink","energyKcal":151.0,"protein":6.0,"fat":3.0,"carbs":25.0,"sodium":32.0,"calcium":15.0,"price":null,"proteinPer100kcal":3.97,"proteinPerYuan":null,"proteinSource":false},{"name":"浓浓黑巧雪冰中杯","code":null,"category":"drink","energyKcal":359.0,"protein":8.0,"fat":12.0,"carbs":51.0,"sodium":224.0,"calcium":207.0,"price":null,"proteinPer100kcal":2.23,"proteinPerYuan":null,"proteinSource":true},{"name":"浓浓黑巧雪冰大杯","code":null,"category":"drink","energyKcal":444.0,"protein":11.0,"fat":14.0,"carbs":65.0,"sodium":258.0,"calcium":251.0,"price":null,"proteinPer100kcal":2.48,"proteinPerYuan":null,"proteinSource":true},{"name":"特浓奶香雪冰中杯","code":null,"category":"drink","energyKcal":269.0,"protein":6.0,"fat":11.0,"carbs":36.0,"sodium":180.0,"calcium":188.0,"price":null,"proteinPer100kcal":2.23,"proteinPerYuan":null,"proteinSource":false},{"name":"特浓奶香雪冰大杯","code":null,"category":"drink","energyKcal":309.0,"protein":7.0,"fat":12.0,"carbs":42.0,"sodium":192.0,"calcium":223.0,"price":null,"proteinPer100kcal":2.27,"proteinPerYuan":null,"proteinSource":false},{"name":"浓浓抹茶雪冰中杯","code":null,"category":"drink","energyKcal":289.0,"protein":7.0,"fat":11.0,"carbs":39.0,"sodium":181.0,"calcium":220.0,"price":null,"proteinPer100kcal":2.42,"proteinPerYuan":null,"proteinSource":false},{"name":"浓浓抹茶雪冰大杯","code":null,"category":"drink","energyKcal":339.0,"protein":8.0,"fat":12.0,"carbs":48.0,"sodium":194.0,"calcium":270.0,"price":null,"proteinPer100kcal":2.36,"proteinPerYuan":null,"proteinSource":true},{"name":"热牛奶中杯","code":null,"category":"drink","energyKcal":176.0,"protein":10.0,"fat":8.0,"carbs":15.0,"sodium":101.0,"calcium":319.0,"price":null,"proteinPer100kcal":5.68,"proteinPerYuan":null,"proteinSource":true},{"name":"热牛奶大杯","code":null,"category":"drink","energyKcal":240.0,"protein":13.0,"fat":11.0,"carbs":21.0,"sodium":137.0,"calcium":435.0,"price":null,"proteinPer100kcal":5.42,"proteinPerYuan":null,"proteinSource":true},{"name":"热牛奶小杯","code":null,"category":"drink","energyKcal":147.0,"protein":8.0,"fat":7.0,"carbs":13.0,"sodium":84.0,"calcium":267.0,"price":null,"proteinPer100kcal":5.44,"proteinPerYuan":null,"proteinSource":true},{"name":"冰牛奶中杯","code":null,"category":"drink","energyKcal":224.0,"protein":13.0,"fat":11.0,"carbs":19.0,"sodium":128.0,"calcium":406.0,"price":null,"proteinPer100kcal":5.8,"proteinPerYuan":null,"proteinSource":true},{"name":"冰牛奶大杯","code":null,"category":"drink","energyKcal":269.0,"protein":15.0,"fat":13.0,"carbs":23.0,"sodium":154.0,"calcium":487.0,"price":null,"proteinPer100kcal":5.58,"proteinPerYuan":null,"proteinSource":true},{"name":"冰牛奶小杯","code":null,"category":"drink","energyKcal":147.0,"protein":8.0,"fat":7.0,"carbs":13.0,"sodium":84.0,"calcium":267.0,"price":null,"proteinPer100kcal":5.44,"proteinPerYuan":null,"proteinSource":true},{"name":"冰奶铁中杯","code":null,"category":"drink","energyKcal":148.0,"protein":8.0,"fat":7.0,"carbs":13.0,"sodium":77.0,"calcium":251.0,"price":null,"proteinPer100kcal":5.41,"proteinPerYuan":null,"proteinSource":true},{"name":"冰奶铁大杯","code":null,"category":"drink","energyKcal":162.0,"protein":9.0,"fat":7.0,"carbs":15.0,"sodium":85.0,"calcium":275.0,"price":null,"proteinPer100kcal":5.56,"proteinPerYuan":null,"proteinSource":true},{"name":"冰奶铁小杯","code":null,"category":"drink","energyKcal":86.0,"protein":5.0,"fat":4.0,"carbs":8.0,"sodium":44.0,"calcium":144.0,"price":null,"proteinPer100kcal":5.81,"proteinPerYuan":null,"proteinSource":false},{"name":"热奶铁中杯","code":"507409","category":"drink","energyKcal":186.0,"protein":11.0,"fat":8.0,"carbs":17.0,"sodium":99.0,"calcium":320.0,"price":13.9,"proteinPer100kcal":5.91,"proteinPerYuan":0.79,"proteinSource":true},{"name":"热奶铁大杯","code":null,"category":"drink","energyKcal":249.0,"protein":14.0,"fat":11.0,"carbs":22.0,"sodium":134.0,"calcium":431.0,"price":null,"proteinPer100kcal":5.62,"proteinPerYuan":null,"proteinSource":true},{"name":"热奶铁小杯","code":null,"category":"drink","energyKcal":134.0,"protein":8.0,"fat":6.0,"carbs":12.0,"sodium":72.0,"calcium":231.0,"price":null,"proteinPer100kcal":5.97,"proteinPerYuan":null,"proteinSource":true},{"name":"冰燕麦奶铁中杯","code":null,"category":"drink","energyKcal":132.0,"protein":3.0,"fat":5.0,"carbs":17.0,"sodium":87.0,"calcium":270.0,"price":null,"proteinPer100kcal":2.27,"proteinPerYuan":null,"proteinSource":false},{"name":"冰燕麦奶铁大杯","code":null,"category":"drink","energyKcal":145.0,"protein":4.0,"fat":5.0,"carbs":19.0,"sodium":96.0,"calcium":296.0,"price":null,"proteinPer100kcal":2.76,"proteinPerYuan":null,"proteinSource":false},{"name":"冰燕麦奶铁小杯","code":null,"category":"drink","energyKcal":77.0,"protein":2.0,"fat":3.0,"carbs":10.0,"sodium":50.0,"calcium":155.0,"price":null,"proteinPer100kcal":2.6,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶铁中杯","code":null,"category":"drink","energyKcal":167.0,"protein":4.0,"fat":6.0,"carbs":22.0,"sodium":112.0,"calcium":345.0,"price":null,"proteinPer100kcal":2.4,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶铁大杯","code":null,"category":"drink","energyKcal":222.0,"protein":5.0,"fat":8.0,"carbs":29.0,"sodium":152.0,"calcium":464.0,"price":null,"proteinPer100kcal":2.25,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶铁小杯","code":null,"category":"drink","energyKcal":120.0,"protein":3.0,"fat":5.0,"carbs":16.0,"sodium":81.0,"calcium":248.0,"price":null,"proteinPer100kcal":2.5,"proteinPerYuan":null,"proteinSource":false},{"name":"冰美式中杯","code":null,"category":"drink","energyKcal":13.0,"protein":1.0,"fat":0.0,"carbs":2.0,"sodium":0.0,"calcium":7.0,"price":null,"proteinPer100kcal":7.69,"proteinPerYuan":null,"proteinSource":false},{"name":"冰美式大杯","code":null,"category":"drink","energyKcal":14.0,"protein":1.0,"fat":0.0,"carbs":2.0,"sodium":0.0,"calcium":8.0,"price":null,"proteinPer100kcal":7.14,"proteinPerYuan":null,"proteinSource":false},{"name":"冰美式小杯","code":null,"category":"drink","energyKcal":10.0,"protein":1.0,"fat":0.0,"carbs":1.0,"sodium":0.0,"calcium":6.0,"price":null,"proteinPer100kcal":10.0,"proteinPerYuan":null,"proteinSource":false},{"name":"热美式中杯","code":null,"category":"drink","energyKcal":13.0,"protein":1.0,"fat":0.0,"carbs":2.0,"sodium":0.0,"calcium":7.0,"price":null,"proteinPer100kcal":7.69,"proteinPerYuan":null,"proteinSource":false},{"name":"热美式大杯","code":null,"category":"drink","energyKcal":14.0,"protein":1.0,"fat":0.0,"carbs":2.0,"sodium":0.0,"calcium":8.0,"price":null,"proteinPer100kcal":7.14,"proteinPerYuan":null,"proteinSource":false},{"name":"热美式小杯","code":null,"category":"drink","energyKcal":10.0,"protein":1.0,"fat":0.0,"carbs":1.0,"sodium":0.0,"calcium":6.0,"price":null,"proteinPer100kcal":10.0,"proteinPerYuan":null,"proteinSource":false},{"name":"冰焦糖玛奇朵","code":null,"category":"drink","energyKcal":148.0,"protein":8.0,"fat":7.0,"carbs":13.0,"sodium":77.0,"calcium":251.0,"price":null,"proteinPer100kcal":5.41,"proteinPerYuan":null,"proteinSource":true},{"name":"热焦糖玛奇朵","code":null,"category":"drink","energyKcal":167.0,"protein":9.0,"fat":7.0,"carbs":15.0,"sodium":88.0,"calcium":284.0,"price":null,"proteinPer100kcal":5.39,"proteinPerYuan":null,"proteinSource":true},{"name":"卡布奇诺中杯","code":null,"category":"drink","energyKcal":167.0,"protein":9.0,"fat":7.0,"carbs":15.0,"sodium":88.0,"calcium":285.0,"price":null,"proteinPer100kcal":5.39,"proteinPerYuan":null,"proteinSource":true},{"name":"卡布奇诺大杯","code":null,"category":"drink","energyKcal":223.0,"protein":13.0,"fat":10.0,"carbs":20.0,"sodium":120.0,"calcium":385.0,"price":null,"proteinPer100kcal":5.83,"proteinPerYuan":null,"proteinSource":true},{"name":"冰浓浓燕麦黑巧中杯","code":null,"category":"drink","energyKcal":120.0,"protein":2.0,"fat":5.0,"carbs":16.0,"sodium":87.0,"calcium":263.0,"price":null,"proteinPer100kcal":1.67,"proteinPerYuan":null,"proteinSource":false},{"name":"冰浓浓燕麦黑巧大杯","code":null,"category":"drink","energyKcal":131.0,"protein":3.0,"fat":5.0,"carbs":17.0,"sodium":95.0,"calcium":388.0,"price":null,"proteinPer100kcal":2.29,"proteinPerYuan":null,"proteinSource":false},{"name":"冰燕麦奶中杯","code":"510488","category":"drink","energyKcal":199.0,"protein":4.0,"fat":8.0,"carbs":26.0,"sodium":145.0,"calcium":438.0,"price":21.0,"proteinPer100kcal":2.01,"proteinPerYuan":0.19,"proteinSource":false},{"name":"冰燕麦奶大杯","code":null,"category":"drink","energyKcal":239.0,"protein":5.0,"fat":9.0,"carbs":32.0,"sodium":174.0,"calcium":525.0,"price":null,"proteinPer100kcal":2.09,"proteinPerYuan":null,"proteinSource":false},{"name":"冰燕麦奶小杯","code":null,"category":"drink","energyKcal":131.0,"protein":3.0,"fat":5.0,"carbs":17.0,"sodium":95.0,"calcium":288.0,"price":null,"proteinPer100kcal":2.29,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶中杯","code":null,"category":"drink","energyKcal":157.0,"protein":3.0,"fat":6.0,"carbs":21.0,"sodium":114.0,"calcium":344.0,"price":null,"proteinPer100kcal":1.91,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶大杯","code":null,"category":"drink","energyKcal":213.0,"protein":4.0,"fat":8.0,"carbs":28.0,"sodium":156.0,"calcium":469.0,"price":null,"proteinPer100kcal":1.88,"proteinPerYuan":null,"proteinSource":false},{"name":"热燕麦奶小杯","code":null,"category":"drink","energyKcal":131.0,"protein":3.0,"fat":5.0,"carbs":17.0,"sodium":95.0,"calcium":288.0,"price":null,"proteinPer100kcal":2.29,"proteinPerYuan":null,"proteinSource":false},{"name":"冰浓浓抹茶牛奶中杯","code":null,"category":"drink","energyKcal":196.0,"protein":8.0,"fat":6.0,"carbs":25.0,"sodium":80.0,"calcium":275.0,"price":null,"proteinPer100kcal":4.08,"proteinPerYuan":null,"proteinSource":true},{"name":"冰浓浓抹茶牛奶大杯","code":null,"category":"drink","energyKcal":240.0,"protein":9.0,"fat":7.0,"carbs":33.0,"sodium":89.0,"calcium":314.0,"price":null,"proteinPer100kcal":3.75,"proteinPerYuan":null,"proteinSource":true},{"name":"热浓浓抹茶牛奶中杯","code":null,"category":"drink","energyKcal":238.0,"protein":11.0,"fat":8.0,"carbs":29.0,"sodium":104.0,"calcium":351.0,"price":null,"proteinPer100kcal":4.62,"proteinPerYuan":null,"proteinSource":true},{"name":"热浓浓抹茶牛奶大杯","code":null,"category":"drink","energyKcal":333.0,"protein":14.0,"fat":12.0,"carbs":41.0,"sodium":142.0,"calcium":482.0,"price":null,"proteinPer100kcal":4.2,"proteinPerYuan":null,"proteinSource":true},{"name":"冰浓浓黑巧中杯","code":null,"category":"drink","energyKcal":135.0,"protein":8.0,"fat":6.0,"carbs":12.0,"sodium":77.0,"calcium":244.0,"price":null,"proteinPer100kcal":5.93,"proteinPerYuan":null,"proteinSource":true},{"name":"冰浓浓黑巧大杯","code":null,"category":"drink","energyKcal":147.0,"protein":8.0,"fat":7.0,"carbs":13.0,"sodium":84.0,"calcium":267.0,"price":null,"proteinPer100kcal":5.44,"proteinPerYuan":null,"proteinSource":true},{"name":"热浓浓黑巧中杯","code":null,"category":"drink","energyKcal":176.0,"protein":10.0,"fat":8.0,"carbs":15.0,"sodium":101.0,"calcium":319.0,"price":null,"proteinPer100kcal":5.68,"proteinPerYuan":null,"proteinSource":true},{"name":"热浓浓黑巧大杯","code":null,"category":"drink","energyKcal":240.0,"protein":13.0,"fat":11.0,"carbs":21.0,"sodium":137.0,"calcium":435.0,"price":null,"proteinPer100kcal":5.42,"proteinPerYuan":null,"proteinSource":true},{"name":"川宁伯爵红茶","code":null,"category":"drink","energyKcal":2.0,"protein":0.0,"fat":0.0,"carbs":0.0,"sodium":0.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"抹茶阿芙佳朵","code":null,"category":"dessert","energyKcal":147.0,"protein":3.0,"fat":4.0,"carbs":23.0,"sodium":50.0,"calcium":136.0,"price":null,"proteinPer100kcal":2.04,"proteinPerYuan":null,"proteinSource":false},{"name":"咖啡阿芙佳朵","code":null,"category":"drink","energyKcal":139.0,"protein":4.0,"fat":4.0,"carbs":21.0,"sodium":49.0,"calcium":111.0,"price":null,"proteinPer100kcal":2.88,"proteinPerYuan":null,"proteinSource":false},{"name":"热浓浓燕麦黑巧中杯","code":null,"category":"drink","energyKcal":157.0,"protein":3.0,"fat":6.0,"carbs":21.0,"sodium":114.0,"calcium":344.0,"price":null,"proteinPer100kcal":1.91,"proteinPerYuan":null,"proteinSource":false},{"name":"热浓浓燕麦黑巧大杯","code":null,"category":"drink","energyKcal":213.0,"protein":4.0,"fat":8.0,"carbs":28.0,"sodium":156.0,"calcium":469.0,"price":null,"proteinPer100kcal":1.88,"proteinPerYuan":null,"proteinSource":false},{"name":"草莓拉明顿","code":null,"category":"dessert","energyKcal":121.0,"protein":2.0,"fat":8.0,"carbs":11.0,"sodium":34.0,"calcium":17.0,"price":null,"proteinPer100kcal":1.65,"proteinPerYuan":null,"proteinSource":false},{"name":"原味板烧鸡腿炒双蛋堡","code":null,"category":"breakfast","energyKcal":419.0,"protein":27.0,"fat":21.0,"carbs":30.0,"sodium":715.0,"calcium":116.0,"price":null,"proteinPer100kcal":6.44,"proteinPerYuan":null,"proteinSource":true},{"name":"双层猪柳蛋麦满分","code":null,"category":"breakfast","energyKcal":513.0,"protein":29.0,"fat":32.0,"carbs":26.0,"sodium":1210.0,"calcium":249.0,"price":null,"proteinPer100kcal":5.65,"proteinPerYuan":null,"proteinSource":true},{"name":"双层火腿扒麦满分","code":null,"category":"breakfast","energyKcal":385.0,"protein":21.0,"fat":22.0,"carbs":26.0,"sodium":979.0,"calcium":134.0,"price":null,"proteinPer100kcal":5.45,"proteinPerYuan":null,"proteinSource":true},{"name":"脆脆薯条","code":null,"category":"side","energyKcal":279.0,"protein":4.0,"fat":14.0,"carbs":32.0,"sodium":540.0,"calcium":13.0,"price":null,"proteinPer100kcal":1.43,"proteinPerYuan":null,"proteinSource":false},{"name":"麦麦趣鸡球","code":null,"category":"side","energyKcal":266.0,"protein":17.0,"fat":13.0,"carbs":19.0,"sodium":789.0,"calcium":13.0,"price":null,"proteinPer100kcal":6.39,"proteinPerYuan":null,"proteinSource":true},{"name":"酥酥多笋卷","code":null,"category":"burger","energyKcal":342.0,"protein":14.0,"fat":15.0,"carbs":36.0,"sodium":1044.0,"calcium":41.0,"price":null,"proteinPer100kcal":4.09,"proteinPerYuan":null,"proteinSource":true},{"name":"薄皮焦香V翅","code":"520445","category":"chicken","energyKcal":192.0,"protein":17.0,"fat":11.0,"carbs":6.0,"sodium":594.0,"calcium":15.0,"price":16.0,"proteinPer100kcal":8.85,"proteinPerYuan":1.06,"proteinSource":true},{"name":"蜜汁BBQ风味薄皮脆汁鸡-带骨里脊","code":null,"category":"chicken","energyKcal":152.0,"protein":20.0,"fat":5.0,"carbs":6.0,"sodium":635.0,"calcium":28.0,"price":null,"proteinPer100kcal":13.16,"proteinPerYuan":null,"proteinSource":true},{"name":"蜜汁BBQ风味薄皮脆汁鸡-琵琶腿","code":null,"category":"chicken","energyKcal":173.0,"protein":18.0,"fat":9.0,"carbs":5.0,"sodium":547.0,"calcium":15.0,"price":null,"proteinPer100kcal":10.4,"proteinPerYuan":null,"proteinSource":true},{"name":"果然多肉","code":null,"category":"other","energyKcal":478.0,"protein":36.0,"fat":17.0,"carbs":44.0,"sodium":1343.0,"calcium":190.0,"price":null,"proteinPer100kcal":7.53,"proteinPerYuan":null,"proteinSource":true},{"name":"“苹板”支撑Pro","code":null,"category":"other","energyKcal":476.0,"protein":25.0,"fat":18.0,"carbs":50.0,"sodium":1077.0,"calcium":117.0,"price":null,"proteinPer100kcal":5.25,"proteinPerYuan":null,"proteinSource":true},{"name":"专“薯鱼”你","code":null,"category":"other","energyKcal":463.0,"protein":18.0,"fat":17.0,"carbs":57.0,"sodium":652.0,"calcium":123.0,"price":null,"proteinPer100kcal":3.89,"proteinPerYuan":null,"proteinSource":true},{"name":"绝代双翅","code":null,"category":"chicken","energyKcal":469.0,"protein":32.0,"fat":27.0,"carbs":23.0,"sodium":1167.0,"calcium":34.0,"price":null,"proteinPer100kcal":6.82,"proteinPerYuan":null,"proteinSource":true},{"name":"牛气满满","code":null,"category":"other","energyKcal":495.0,"protein":26.0,"fat":24.0,"carbs":42.0,"sodium":764.0,"calcium":79.0,"price":null,"proteinPer100kcal":5.25,"proteinPerYuan":null,"proteinSource":true},{"name":"蜜汁快乐","code":null,"category":"other","energyKcal":258.0,"protein":22.0,"fat":9.0,"carbs":20.0,"sodium":721.0,"calcium":34.0,"price":null,"proteinPer100kcal":8.53,"proteinPerYuan":null,"proteinSource":true},{"name":"迷你朱古力新地","code":null,"category":"drink","energyKcal":140.0,"protein":3.0,"fat":4.0,"carbs":22.0,"sodium":63.0,"calcium":90.0,"price":null,"proteinPer100kcal":2.14,"proteinPerYuan":null,"proteinSource":false},{"name":"迷你草莓新地","code":null,"category":"dessert","energyKcal":122.0,"protein":2.0,"fat":3.0,"carbs":21.0,"sodium":42.0,"calcium":78.0,"price":null,"proteinPer100kcal":1.64,"proteinPerYuan":null,"proteinSource":false},{"name":"鲜蔬蛋沙拉叠叠卷","code":null,"category":"burger","energyKcal":266.0,"protein":11.0,"fat":14.0,"carbs":24.0,"sodium":518.0,"calcium":62.0,"price":null,"proteinPer100kcal":4.14,"proteinPerYuan":null,"proteinSource":true},{"name":"鸡肉蛋沙拉叠叠卷","code":null,"category":"chicken","energyKcal":387.0,"protein":17.0,"fat":21.0,"carbs":31.0,"sodium":842.0,"calcium":67.0,"price":null,"proteinPer100kcal":4.39,"proteinPerYuan":null,"proteinSource":true},{"name":"中杯怡泉+C","code":null,"category":"drink","energyKcal":110.0,"protein":0.0,"fat":0.0,"carbs":27.0,"sodium":0.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"大杯怡泉+C","code":null,"category":"drink","energyKcal":168.0,"protein":0.0,"fat":0.0,"carbs":41.0,"sodium":0.0,"calcium":0.0,"price":null,"proteinPer100kcal":0.0,"proteinPerYuan":null,"proteinSource":false},{"name":"蒜了吧黄油风味薄皮脆汁鸡-琵琶腿","code":null,"category":"chicken","energyKcal":164.0,"protein":19.0,"fat":6.0,"carbs":6.0,"sodium":867.0,"calcium":9.0,"price":null,"proteinPer100kcal":11.59,"proteinPerYuan":null,"proteinSource":true},{"name":"蒜了吧黄油风味薄皮脆汁鸡-带骨里脊","code":null,"category":"chicken","energyKcal":126.0,"protein":19.0,"fat":2.0,"carbs":4.0,"sodium":750.0,"calcium":59.0,"price":null,"proteinPer100kcal":15.08,"proteinPerYuan":null,"proteinSource":true},{"name":"柠萌风味薄皮焦香V翅","code":null,"category":"chicken","energyKcal":204.0,"protein":18.0,"fat":11.0,"carbs":6.0,"sodium":768.0,"calcium":22.0,"price":null,"proteinPer100kcal":8.82,"proteinPerYuan":null,"proteinSource":true}]};
+
+/* ---SOLVER-BEGIN--- */
+/* ============================================================
+   1. 求解器：与 scripts/coach.py 完全同构的前端移植
+   这段代码被 tests/test_solver_parity.mjs 原样抽出，与 Python 版逐步对拍，
+   确保网页和命令行给出的方案永远一致。
+   ============================================================ */
+const CFG = { MAX_ITEMS:3, MAX_QTY:2, MAX_SINGLE_QTY:6,
+              PROTEIN_FLOOR:5, MEAL_CAP:45, KCAL_CAP:900 };
+
+const POOL = DATA.items
+  .filter(it => it.price && it.protein >= CFG.PROTEIN_FLOOR && it.category !== 'drink')
+  .sort((a,b) => b.proteinPerYuan - a.proteinPerYuan);
+
+function kCombos(arr,k){
+  const out=[]; (function rec(start,cur){
+    if(cur.length===k){out.push(cur.slice());return;}
+    for(let i=start;i<arr.length;i++){cur.push(arr[i]);rec(i+1,cur);cur.pop();}
+  })(0,[]); return out;
+}
+function cartesian(limit,n){
+  const out=[]; (function rec(cur){
+    if(cur.length===n){out.push(cur.slice());return;}
+    for(let q=1;q<=limit;q++){cur.push(q);rec(cur);cur.pop();}
+  })([]); return out;
+}
+function evaluate(combo){
+  const r={items:[],totalPrice:0,totalProtein:0,totalKcal:0,totalFat:0,totalSodium:0};
+  for(const [it,q] of combo){
+    r.items.push({name:it.name,qty:q,price:it.price,protein:it.protein,
+                  energyKcal:it.energyKcal,line:Math.round(it.price*q*10)/10});
+    r.totalPrice+=it.price*q; r.totalProtein+=it.protein*q;
+    r.totalKcal+=it.energyKcal*q; r.totalFat+=it.fat*q; r.totalSodium+=it.sodium*q;
+  }
+  r.totalPrice=Math.round(r.totalPrice*10)/10;
+  r.totalProtein=Math.round(r.totalProtein*10)/10;
+  r.totalKcal=Math.round(r.totalKcal); r.totalFat=Math.round(r.totalFat*10)/10;
+  r.totalSodium=Math.round(r.totalSodium);
+  r.proteinPerYuan=Math.round(r.totalProtein/r.totalPrice*100)/100;
+  r.proteinPer100kcal=Math.round(r.totalProtein/r.totalKcal*10000)/100;
+  return r;
+}
+
+/* 候选解在页面加载时一次性算完。
+   每次拖动滑块都重新枚举上万种组合会让界面卡顿，而候选集本身不随
+   体重/缺口变化——只有筛选条件在变。预计算是这里唯一正确的做法。 */
+const CANDIDATES = (() => {
+  const list = [];
+  for (let size=1; size<=CFG.MAX_ITEMS; size++){
+    const limit = size===1 ? CFG.MAX_SINGLE_QTY : CFG.MAX_QTY;
+    for (const group of kCombos(POOL, size)){
+      for (const qtys of cartesian(limit, size)){
+        list.push(evaluate(group.map((it,i)=>[it, qtys[i]])));
+      }
+    }
+  }
+  return list;
+})();
+
+function solve(gap, mode, kcalCap=CFG.KCAL_CAP){
+  if(gap<=0) return null;
+  let best=null, bestKey=Infinity;
+  for(const c of CANDIDATES){
+    if(c.totalProtein<gap) continue;
+    if(kcalCap && c.totalKcal>kcalCap) continue;
+    const key = mode==='budget' ? c.totalPrice*100000+c.totalKcal
+                                : c.totalKcal*100000+c.totalPrice*100;
+    if(key<bestKey){ bestKey=key; best=c; }
+  }
+  return best;
+}
+/* ---SOLVER-END--- */
+
+/* ============================================================
+   2. 顶部统计
+   ============================================================ */
+const priced = DATA.items.filter(i=>i.price && i.proteinSource);
+const byValue = [...priced].sort((a,b)=>b.proteinPerYuan-a.proteinPerYuan);
+const byDensity = [...DATA.items].filter(i=>i.proteinSource)
+                       .sort((a,b)=>b.proteinPer100kcal-a.proteinPer100kcal);
+document.getElementById('hTotal').textContent = DATA.items.length;
+document.getElementById('sBest').innerHTML  = byValue[0].proteinPerYuan+'<small>g/元</small>';
+document.getElementById('sDens').innerHTML  = byDensity[0].proteinPer100kcal.toFixed(2)+'<small>g/100kcal</small>';
+document.getElementById('sCost').innerHTML  = '¥'+(1/byValue[0].proteinPerYuan).toFixed(2);
+document.getElementById('sPriced').innerHTML= priced.length+'<small>项</small>';
+
+const champ = byDensity[0];
+document.getElementById('cRatio').innerHTML = champ.proteinPer100kcal.toFixed(2)+'<small>蛋白密度 g/100kcal</small>';
+document.getElementById('cName').textContent = champ.name;
+document.getElementById('cDesc').textContent =
+  `只有 ${champ.energyKcal} kcal，却提供 ${champ.protein} g 蛋白质，脂肪仅 ${champ.fat} g。` +
+  `在全部 ${DATA.items.length} 项餐品里，这是「增肌不增脂」的最优解——比绝大多数人以为的「健身餐」更适合练后补给。`;
+
+/* ============================================================
+   3. 排行榜
+   ============================================================ */
+function renderRank(el, list, key, fmt, alt){
+  const max = Math.max(...list.map(x=>x[key]));
+  el.innerHTML = list.map(it=>`
+    <div class="bar">
+      <div class="lbl"><span>${it.name}</span><b>${fmt(it[key])}</b></div>
+      <div class="track"><div class="fill${alt?' alt':''}" style="width:${it[key]/max*100}%"></div></div>
+    </div>`).join('');
+}
+renderRank(document.getElementById('rankDensity'), byDensity.slice(0,10),
+           'proteinPer100kcal', v=>v.toFixed(2), false);
+renderRank(document.getElementById('rankValue'), byValue.slice(0,10),
+           'proteinPerYuan', v=>v.toFixed(2), true);
+
+/* ============================================================
+   4. 散点图：蛋白 vs 热量
+   ============================================================ */
+(function drawScatter(){
+  const svg=document.getElementById('scatter');
+  const W=900,H=460,P={l:64,r:26,t:26,b:52};
+  const pts=DATA.items.filter(i=>i.protein>0 && i.energyKcal>0 && i.proteinSource);
+  const xMax=Math.ceil(Math.max(...pts.map(p=>p.energyKcal))/100)*100;
+  const yMax=Math.ceil(Math.max(...pts.map(p=>p.protein))/5)*5;
+  const X=v=>P.l+(v/xMax)*(W-P.l-P.r);
+  const Y=v=>H-P.b-(v/yMax)*(H-P.t-P.b);
+  let s='';
+  // 网格
+  for(let k=0;k<=yMax;k+=10){
+    s+=`<line x1="${P.l}" y1="${Y(k)}" x2="${W-P.r}" y2="${Y(k)}" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+    s+=`<text x="${P.l-12}" y="${Y(k)+4}" fill="#6b6b73" font-size="12" text-anchor="end" font-family="var(--mono)">${k}</text>`;
+  }
+  for(let k=0;k<=xMax;k+=200){
+    s+=`<line x1="${X(k)}" y1="${P.t}" x2="${X(k)}" y2="${H-P.b}" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+    s+=`<text x="${X(k)}" y="${H-P.b+22}" fill="#6b6b73" font-size="12" text-anchor="middle" font-family="var(--mono)">${k}</text>`;
+  }
+  // 高密度参考线 8 g/100kcal
+  s+=`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(xMax)}" y2="${Y(0.08*xMax)}" stroke="rgba(255,199,44,.35)" stroke-width="1.5" stroke-dasharray="6 5"/>`;
+  s+=`<text x="${X(xMax)-6}" y="${Y(0.08*xMax)-10}" fill="#ffc72c" font-size="12" text-anchor="end">8 g 蛋白 / 100 kcal</text>`;
+  // 点
+  for(const p of pts){
+    const isTop=p.proteinPer100kcal>=8, hasPrice=!!p.price;
+    const r = hasPrice?5.5:4;
+    const fill = hasPrice ? '#da291c' : (isTop?'#ffc72c':'#8a8a92');
+    s+=`<circle cx="${X(p.energyKcal)}" cy="${Y(p.protein)}" r="${r}" fill="${fill}" fill-opacity="${hasPrice?0.95:0.8}">`;
+    s+=`<title>${p.name}｜蛋白 ${p.protein} g｜热量 ${p.energyKcal} kcal｜${p.proteinPer100kcal} g/100kcal${hasPrice?'｜¥'+p.price:''}</title></circle>`;
+  }
+  // 轴标签
+  s+=`<text x="${(W-P.l-P.r)/2+P.l}" y="${H-10}" fill="#98989f" font-size="13" text-anchor="middle">热量 kcal</text>`;
+  s+=`<text x="18" y="${(H-P.t-P.b)/2+P.t}" fill="#98989f" font-size="13" text-anchor="middle" transform="rotate(-90 18 ${(H-P.t-P.b)/2+P.t})">蛋白质 g</text>`;
+  svg.innerHTML=s;
+})();
+
+/* ============================================================
+   5. 计算器交互
+   ============================================================ */
+const el = id => document.getElementById(id);
+let mode='budget';
+const fmt1 = v => (Math.round(v*10)/10);
+
+function compute(){
+  const weight=+el('weight').value, factor=+el('factor').value, consumed=+el('consumed').value;
+  el('vWeight').textContent=weight; el('vFactor').textContent=factor.toFixed(1);
+  el('vConsumed').textContent=consumed;
+
+  const target=Math.round(weight*factor);
+  const remaining=fmt1(target-consumed);
+  const mealGap=Math.max(0, Math.min(remaining, CFG.MEAL_CAP));
+  const meals = remaining>0 ? Math.ceil(remaining/CFG.MEAL_CAP) : 0;
+
+  el('oRemain').textContent=Math.max(0,remaining);
+  el('oMeal').textContent=mealGap;
+  el('oMeals').textContent = remaining>CFG.MEAL_CAP
+    ? `单餐上限 ${CFG.MEAL_CAP} g · 建议分 ${meals} 餐补完`
+    : `目标 ${target} g · 一餐就能补齐`;
+
+  if(mealGap<=0){
+    el('oRows').innerHTML=`<div class="row"><div class="nm">今天的蛋白质已经够了，不用再点。想吃的话，从排行榜里挑个高密度的吧。</div></div>`;
+    el('oTotals').innerHTML=''; el('oVs').innerHTML='';
+    return;
+  }
+
+  const plan = solve(mealGap, mode);
+  const budget = solve(mealGap,'budget'), lean = solve(mealGap,'lean');
+
+  el('oRows').innerHTML = plan.items.map(it=>`
+    <div class="row">
+      <span class="q">×${it.qty}</span>
+      <span class="nm">${it.name}</span>
+      <span class="mt">蛋白 <b>${it.protein*it.qty}</b>g · <b>${it.energyKcal*it.qty}</b>kcal · ¥${it.line.toFixed(1)}</span>
+    </div>`).join('');
+
+  el('oTotals').innerHTML = `
+    <div><div class="k">合计价格</div><div class="v" style="color:var(--yellow)">¥${plan.totalPrice.toFixed(1)}</div></div>
+    <div><div class="k">蛋白质</div><div class="v">${plan.totalProtein} g</div></div>
+    <div><div class="k">热量</div><div class="v">${plan.totalKcal}</div></div>
+    <div><div class="k">脂肪</div><div class="v">${plan.totalFat} g</div></div>
+    <div><div class="k">钠</div><div class="v">${plan.totalSodium} mg</div></div>
+    <div><div class="k">g / 元</div><div class="v">${plan.proteinPerYuan}</div></div>`;
+
+  if(budget && lean && (budget.totalPrice!==lean.totalPrice || budget.totalKcal!==lean.totalKcal)){
+    const dn = budget.totalPrice - lean.totalPrice;
+    const dk = budget.totalKcal - lean.totalKcal;
+    el('oVs').innerHTML=`
+      <div class="t">同一个蛋白缺口的两种解法</div>
+      <div class="opt a"><span class="tag">最省钱</span>
+        <span>${budget.items.map(i=>i.name+'×'+i.qty).join(' + ')}</span>
+        <span class="d">¥${budget.totalPrice.toFixed(1)} · ${budget.totalKcal} kcal</span></div>
+      <div class="opt b"><span class="tag">最清淡</span>
+        <span>${lean.items.map(i=>i.name+'×'+i.qty).join(' + ')}</span>
+        <span class="d">¥${lean.totalPrice.toFixed(1)} · ${lean.totalKcal} kcal</span></div>
+      <div class="note">多花 ¥${Math.abs(dn).toFixed(1)}${dn<0?' 反而更便宜':''}，可以少摄入 <b>${Math.max(0,dk)}</b> kcal。</div>`;
+  } else {
+    el('oVs').innerHTML=`<div class="t">这个缺口下，最省钱和最清淡是同一个方案——不用纠结。</div>`;
+  }
+}
+
+el('weight').addEventListener('input',compute);
+el('factor').addEventListener('input',compute);
+el('consumed').addEventListener('input',compute);
+el('modeSeg').addEventListener('click',e=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  [...el('modeSeg').children].forEach(b=>b.classList.toggle('on',b===btn));
+  mode=btn.dataset.mode; compute();
+});
+compute();
+</script>
+</body>
+</html>

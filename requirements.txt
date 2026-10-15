@@ -1,0 +1,3 @@
+# 本项目只用 Python 标准库（urllib / json / pathlib / argparse / itertools），
+# 没有任何第三方依赖 —— pip install 可以直接跳过。
+# 这个文件存在的意义是明确告诉你：我们刻意不引入依赖。
