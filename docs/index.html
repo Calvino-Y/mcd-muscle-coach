@@ -144,7 +144,7 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--muted);background
   <h1>在麦当劳增肌，<br>一克蛋白质最低只要 <span class="price">¥0.58</span></h1>
   <p class="lede">
     我们把麦当劳 <b id="hTotal"></b> 项餐品的官方营养成分和实时菜单价格全部拉下来跑了一遍。
-    结论是：增肌不必只吃水煮鸡胸——麦门里藏着比很多健身餐更划算的蛋白质。
+    结论是：练后补给的那一份高蛋白，菜单里本来就有。
     只要你说清楚「今天还差多少克蛋白」，我们就能算出这一顿该怎么点。
   </p>
   <div class="stats">
@@ -371,7 +371,7 @@ document.getElementById('cRatio').innerHTML = champ.proteinPer100kcal.toFixed(2)
 document.getElementById('cName').textContent = champ.name;
 document.getElementById('cDesc').textContent =
   `只有 ${champ.energyKcal} kcal，却提供 ${champ.protein} g 蛋白质，脂肪仅 ${champ.fat} g。` +
-  `在全部 ${DATA.items.length} 项餐品里，这是「增肌不增脂」的最优解——比绝大多数人以为的「健身餐」更适合练后补给。`;
+  `在全部 ${DATA.items.length} 项餐品里，它的蛋白密度排第一。`;
 
 /* ============================================================
    3. 排行榜
