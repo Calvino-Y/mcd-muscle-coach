@@ -8,6 +8,8 @@
 
 ![蛋白密度榜与蛋白性价比榜](docs/preview-full.png)
 
+**在线体验（无需安装，直接拖动滑块试算）：https://calvino-y.github.io/mcd-muscle-coach/**
+
 ## 它解决什么问题
 
 增肌期想吃麦当劳，很多人第一反应是「今天算了」。但官方营养数据不支持这种自我劝退：
@@ -21,7 +23,7 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/<your-name>/mcd-muscle-coach.git
+git clone https://github.com/Calvino-Y/mcd-muscle-coach.git
 cd mcd-muscle-coach
 
 # 1. 领取免费的麦当劳 MCP Token（手机号登录，控制台点激活）
@@ -78,7 +80,9 @@ python scripts/render_dashboard.py   # 生成 docs/index.html
 3. **蛋白性价比榜**——每一块钱能换多少蛋白质
 4. **蛋白 × 热量 散点图**——一眼看出哪些餐品在「高蛋白低热量」的前沿上
 
-开启 GitHub Pages（Settings → Pages → 选 `main` 分支的 `/docs` 目录）即可在线访问。
+在线面板已部署在 GitHub Pages：https://calvino-y.github.io/mcd-muscle-coach/
+
+（自行部署：Settings → Pages → 选 `main` 分支的 `/docs` 目录即可。）
 
 ## 它是怎么算的
 
@@ -132,7 +136,7 @@ mcd-muscle-coach/
 ## 作为 WorkBuddy Skill 安装
 
 ```bash
-git clone https://github.com/<your-name>/mcd-muscle-coach.git \
+git clone https://github.com/Calvino-Y/mcd-muscle-coach.git \
   ~/.workbuddy/skills/mcd-muscle-coach
 ```
 
