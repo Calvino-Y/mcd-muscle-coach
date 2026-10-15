@@ -235,6 +235,94 @@ tbody tr.best .rk{background:var(--red);color:#fff}
 .pbar i.zero{background:#d8d2c6}
 .ord .note{font-size:11.5px;color:var(--dim);margin-top:7px}
 
+/* ---------- 本地工具模式 ---------- */
+.live-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:900px){.live-grid{grid-template-columns:1fr}}
+.live-state{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;
+  border-radius:999px;padding:4px 12px;margin-bottom:14px}
+.live-state.on{background:#eef7ea;color:#2f6b1f}
+.live-state.off{background:var(--line-2);color:var(--muted)}
+.live-state.demo{background:var(--yellow-soft);color:#8a6400}
+.live-state .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+input[type=text],input[type=password]{width:100%;font-family:inherit;font-size:14px;
+  padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;
+  color:var(--ink);outline:none;transition:.15s}
+input[type=text]:focus,input[type=password]:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;
+  font-size:14px;font-weight:700;padding:11px 18px;border:0;border-radius:10px;cursor:pointer;transition:.15s}
+.btn.primary{background:var(--red);color:#fff}
+.btn.primary:hover{background:var(--red-2)}
+.btn.gold{background:var(--yellow);color:var(--ink)}
+.btn.gold:hover{background:var(--yellow-2)}
+.btn.ghost{background:var(--line-2);color:var(--ink-2)}
+.btn.sm{font-size:12.5px;padding:8px 13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.steps{list-style:none;display:flex;flex-direction:column;gap:11px}
+.steps li{display:flex;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.steps li b{flex-shrink:0;width:20px;height:20px;border-radius:6px;background:var(--red);
+  color:#fff;display:grid;place-items:center;font-size:11px;font-family:var(--mono);margin-top:1px}
+pre.code{background:#2b2924;color:#f4efe2;border-radius:10px;padding:14px 16px;overflow-x:auto;
+  font-family:var(--mono);font-size:12.5px;line-height:1.8;margin:12px 0}
+pre.code .c{color:#a29a87}
+.msg{font-size:13px;border-radius:9px;padding:11px 14px;margin-top:13px;line-height:1.6}
+.msg.err{background:var(--red-soft);color:var(--red);border-left:3px solid var(--red)}
+.msg.ok{background:#eef7ea;color:#2f6b1f;border-left:3px solid #6aa84f}
+.msg.info{background:var(--yellow-soft);color:#7a5c00;border-left:3px solid var(--yellow)}
+.store-list{display:flex;flex-direction:column;gap:7px;margin-top:12px;max-height:236px;overflow-y:auto}
+.store{display:flex;gap:10px;align-items:center;font-size:13px;padding:9px 12px;border:1px solid var(--line-2);
+  border-radius:9px;cursor:pointer;background:#fff;text-align:left;font-family:inherit;width:100%}
+.store:hover{border-color:var(--red);background:var(--red-soft)}
+.store.on{border-color:var(--red);background:var(--red-soft)}
+.store .sc{font-family:var(--mono);font-size:11.5px;color:var(--muted);flex-shrink:0}
+.store .sn{font-weight:600;color:var(--ink);flex:1;min-width:0}
+.store .sd{font-family:var(--mono);font-size:11px;color:var(--dim);flex-shrink:0}
+
+/* ---------- 券日历 ---------- */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+@media(max-width:860px){.cal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cal-col{border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;padding:12px 11px;min-height:132px}
+.cal-col.today{border-color:var(--red);background:linear-gradient(180deg,var(--red-soft),#fff 60%)}
+.cal-col .wd{font-size:12.5px;font-weight:700;margin-bottom:2px}
+.cal-col .dt{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:9px}
+.cal-empty{font-size:11.5px;color:var(--dim)}
+.slot{display:block;font-size:11.5px;line-height:1.5;padding:7px 9px;border-radius:8px;
+  background:var(--cream);border:1px solid var(--line-2);margin-bottom:6px}
+.slot .t{font-family:var(--mono);font-size:10.5px;color:var(--muted);display:block}
+.slot .nm{display:block;font-weight:600;color:var(--ink);margin-top:2px}
+.slot .v{display:block;font-family:var(--mono);font-size:11px;color:var(--red);font-weight:700;margin-top:2px}
+.slot.un .v{color:var(--dim);font-weight:400}
+.slot.win{border-color:var(--yellow-2);background:var(--yellow-soft)}
+
+/* ---------- 券明细 ---------- */
+.cp{border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;padding:14px 17px;margin-bottom:9px}
+.cp .top{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:7px}
+.cp .ttl{font-weight:700;font-size:14px}
+.cp .win{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.cp .prc{margin-left:auto;font-family:var(--mono);font-weight:700;color:var(--red);font-size:15px}
+.cp .basis{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.65}
+.cf{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
+.cf.deterministic{background:#eef7ea;color:#2f6b1f}
+.cf.range{background:var(--yellow-soft);color:#8a6400}
+.cf.partial{background:#eef2fb;color:#3a5ba0}
+.cf.unmatched{background:var(--line-2);color:var(--muted)}
+.rng{font-family:var(--mono);font-size:13.5px}
+.rng b{color:var(--red);font-size:15px}
+
+/* ---------- 分享卡 ---------- */
+.share-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:22px;align-items:start}
+@media(max-width:900px){.share-grid{grid-template-columns:1fr}}
+#shareCanvas{width:100%;max-width:560px;border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;box-shadow:var(--shadow);display:block}
+textarea.copy{width:100%;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:12px 14px;
+  border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink-2);
+  resize:vertical;min-height:120px;outline:none}
+
+/* ---------- 帕累托 ---------- */
+.tiers{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.tier{font-size:12px;padding:6px 12px;border-radius:999px;background:var(--cream);
+  border:1px solid var(--line);color:var(--ink-2);font-family:var(--mono)}
+
 /* ---------- footer ---------- */
 footer{padding:54px 0 0;font-size:13px;color:var(--dim);background:var(--cream);
   border-top:3px solid var(--red)}
@@ -252,14 +340,19 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
   <div class="in">
     <div class="brand"><span class="mk">M</span><span>麦门增肌师 · McMuscle</span></div>
     <div class="links">
+      <a href="#connect">连接账号</a>
       <a href="#solver">缺口求解</a>
       <a href="#records">我的订单</a>
+      <a href="#coupons">限时券</a>
+      <a href="#breakfast">早餐窗口</a>
       <a href="#ranks">排行榜</a>
       <a href="#quality">蛋白质量</a>
       <a href="#tradeoff">热量图谱</a>
+      <a href="#pareto">帕累托前沿</a>
       <a href="#ways">点法对比</a>
       <a href="#cats">品类战力</a>
       <a href="#week">一周计划</a>
+      <a href="#share">分享卡</a>
     </div>
   </div>
 </nav>
@@ -286,10 +379,23 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 
 <div class="wrap">
 
+<!-- ============ 0. 本地工具模式 ============ -->
+<section id="connect">
+  <div class="sec-head">
+    <div class="sec-tag"><i>1</i>Your Own Account</div>
+    <h2>这份面板，用你自己的账号跑一遍</h2>
+    <p>你现在看到的每一个数字，都来自我账号里的一次真实采样。看别人吃了什么是不会有代入感的——
+      所以这个项目做成<b>两种用法</b>：静态页面负责让人看懂思路，本地服务负责让它真的可用。
+      本地模式下它会实时拉取<b>你自己门店</b>的菜单价格、<b>你自己</b>的历史订单和优惠券，
+      然后用同一套求解器重算下面所有板块。</p>
+  </div>
+  <div class="live-grid" id="liveGrid"></div>
+</section>
+
 <!-- ============ 1. 求解器 ============ -->
 <section id="solver">
   <div class="sec-head">
-    <div class="sec-tag"><i>1</i>Solver</div>
+    <div class="sec-tag"><i>2</i>Solver</div>
     <h2>还差多少蛋白，或者只想花多少钱？</h2>
     <p>两种问法，同一个求解器。它会在 <b id="pCand"></b> 个候选组合里穷举，而不是靠感觉挑一个。</p>
   </div>
@@ -366,7 +472,7 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 <!-- ============ 2. 真实订单体检 ============ -->
 <section class="alt" id="records">
   <div class="sec-head">
-    <div class="sec-tag"><i>2</i>Your Real Orders</div>
+    <div class="sec-tag"><i>3</i>Your Real Orders</div>
     <h2>顺便看看：你自己在麦当劳到底点了什么</h2>
     <p>下面每一单都来自你账号里 <code>order-list</code> 返回的真实历史订单，蛋白和热量按官方营养表<b>逐件对齐</b>。
       查不到对应条目的餐品会被标成虚线「未匹配」，该单的覆盖率如实写在卡片上——我们不拿相近餐品去估一个好看的数字。</p>
@@ -383,10 +489,54 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
   <div class="hint" id="orderFoot" style="margin-top:14px"></div>
 </section>
 
-<!-- ============ 3. 排行榜 ============ -->
-<section class="alt" id="ranks">
+<!-- ============ 4. 限时券 × 蛋白效率 ============ -->
+<section id="coupons">
   <div class="sec-head">
-    <div class="sec-tag"><i>3</i>Leaderboard</div>
+    <div class="sec-tag"><i>4</i>Limited-Time Coupons</div>
+    <h2>时间也是一个变量：券只在特定时段生效</h2>
+    <p>省钱类工具只管「花多少钱」，增肌类工具只管「多少克蛋白」——<b>很少有人把券和蛋白质放在一起算</b>。
+      但券是带时间窗的：星期几、几点到几点，全都写在规则里。于是「今天这顿值不值」
+      就变成了一个带时间约束的优化问题，而不是一句「今天有券」。</p>
+  </div>
+  <div class="week-sum" id="cpSum"></div>
+  <div class="cal" id="cpCal"></div>
+  <div class="callout" style="margin-top:26px">
+    <div class="ratio" id="cpRatio">–<small id="cpRatioLbl">券后每克蛋白最低可到</small></div>
+    <div>
+      <h3 id="cpInsightTitle">–</h3>
+      <p id="cpInsight">–</p>
+    </div>
+  </div>
+  <h3 style="font-size:15px;font-weight:700;margin:32px 0 6px">逐张券：到底能不能算出蛋白质</h3>
+  <p class="hint" id="cpNote" style="margin:0 0 16px"></p>
+  <div id="cpList"></div>
+</section>
+
+<!-- ============ 5. 早餐增肌窗口 ============ -->
+<section class="alt" id="breakfast">
+  <div class="sec-head">
+    <div class="sec-tag"><i>5</i>Breakfast Window</div>
+    <h2>被整个菜单漏掉的时段：早上 5 点到 10 点半</h2>
+    <p>到店菜单<b>不返回早餐餐品的价格</b>——因为早餐是限时供应的。所以任何靠
+      <code>query-meals</code> 拿价格做分析的工具，都会整块漏掉早餐。
+      但官方营养表里有早餐，而且数字相当好看。</p>
+  </div>
+  <div class="week-sum" id="bfSum"></div>
+  <div class="tbl-wrap" style="margin-top:22px">
+    <table>
+      <thead><tr>
+        <th>早餐餐品</th><th>蛋白质</th><th>热量</th><th>脂肪</th><th>g/100kcal</th><th>钠/10g蛋白</th>
+      </tr></thead>
+      <tbody id="bfBody"></tbody>
+    </table>
+  </div>
+  <div class="hint" id="bfNote" style="margin-top:12px"></div>
+</section>
+
+<!-- ============ 3. 排行榜 ============ -->
+<section id="ranks">
+  <div class="sec-head">
+    <div class="sec-tag"><i>6</i>Leaderboard</div>
     <h2>两张排行榜，两种「划算」</h2>
     <p>左边看「每一百大卡能换多少蛋白质」——练后不想背上额外热量负担就看它；右边看「每一块钱能换多少蛋白质」——预算有限就看它。</p>
   </div>
@@ -407,20 +557,21 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 <!-- ============ 3. 蛋白质量 ============ -->
 <section id="quality">
   <div class="sec-head">
-    <div class="sec-tag"><i>4</i>Quality</div>
+    <div class="sec-tag"><i>7</i>Quality</div>
     <h2>蛋白够多，但这一口值不值？</h2>
     <p>只看蛋白质会漏掉两件事：<b>钠</b>和<b>脂肪</b>。同样的蛋白质，不同餐品带来的钠可以差一倍多。这里把「每 10 克蛋白质附赠多少钠/脂肪」算出来单独排一遍。</p>
   </div>
-  <div class="seg gold" id="qSeg" style="max-width:460px;margin-bottom:18px">
+  <div class="seg gold" id="qSeg" style="max-width:600px;margin-bottom:18px">
     <button data-q="sodium" class="on">钠负荷最低</button>
     <button data-q="fat">脂肪负荷最低</button>
     <button data-q="value">性价比最高</button>
+    <button data-q="calcium">钙最充足</button>
   </div>
   <div class="tbl-wrap">
     <table>
       <thead><tr>
         <th>餐品</th><th>蛋白质</th><th>价格</th><th>g/元</th><th>g/100kcal</th>
-        <th>钠/10g蛋白</th><th>脂肪/10g蛋白</th>
+        <th>钠/10g蛋白</th><th>脂肪/10g蛋白</th><th>钙/10g蛋白</th>
       </tr></thead>
       <tbody id="qBody"></tbody>
     </table>
@@ -431,7 +582,7 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 <!-- ============ 4. 散点图 ============ -->
 <section class="alt" id="tradeoff">
   <div class="sec-head">
-    <div class="sec-tag"><i>5</i>Trade-off</div>
+    <div class="sec-tag"><i>8</i>Trade-off</div>
     <h2>蛋白质和热量，从来不是一回事</h2>
     <p>黄色虚线是「每 100 kcal 换到 8 g 蛋白」的分界线。落在虚线左上方的餐品，才是增肌期真正的朋友——它们给你蛋白质，却几乎不额外占用你的热量预算。</p>
   </div>
@@ -445,10 +596,37 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
   </div>
 </section>
 
+<!-- ============ 9. 帕累托前沿 ============ -->
+<section id="pareto">
+  <div class="sec-head">
+    <div class="sec-tag"><i>9</i>Pareto Front</div>
+    <h2>哪些餐品是「真的没有更好的选择」？</h2>
+    <p>前面两张排行榜各看一个维度，但真实决策是三维的：<b>蛋白要多、热量要低、价格要便宜</b>。
+      把所有餐品两两比一遍，凡是能找到「三项都不比你差、至少一项比你好」的餐品，就被淘汰出局。
+      活下来的这一小撮叫<b>帕累托前沿</b>——它们之间没有客观优劣，只有取舍。</p>
+  </div>
+  <div class="tiers" id="parTiers"></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>餐品</th><th>蛋白质</th><th>热量</th><th>价格</th><th>g/元</th><th>g/100kcal</th>
+      </tr></thead>
+      <tbody id="parBody"></tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:26px">
+    <div class="ratio" id="parRatio">–<small>被支配的名气餐品</small></div>
+    <div>
+      <h3>有名不等于最优</h3>
+      <p id="parDominated">–</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 5. 点法对比 ============ -->
 <section id="ways">
   <div class="sec-head">
-    <div class="sec-tag"><i>6</i>Same Gap, Different Ways</div>
+    <div class="sec-tag"><i>10</i>Same Gap, Different Ways</div>
     <h2>凑够同样的蛋白，不同点法差多少？</h2>
     <p>这是这个工具存在的理由。同样补齐 <b id="wGap">45</b> g 蛋白，算法给出的组合方案和「盯着一个单品狂点」之间，价格能差出一顿饭钱。</p>
   </div>
@@ -466,7 +644,7 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 <!-- ============ 6. 品类战力 ============ -->
 <section class="alt" id="cats">
   <div class="sec-head">
-    <div class="sec-tag"><i>7</i>Category Power</div>
+    <div class="sec-tag"><i>11</i>Category Power</div>
     <h2>哪一类餐品，整体最能打？</h2>
     <p>把菜单按品类聚合，看平均蛋白密度和平均性价比。注意：这里用官方营养表的原始分类，「其他」里其实躺着巨无霸和麦香鱼——我们不为了让图表好看而改动源数据。</p>
   </div>
@@ -476,12 +654,39 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 <!-- ============ 7. 一周计划 ============ -->
 <section id="week">
   <div class="sec-head">
-    <div class="sec-tag"><i>8</i>Weekly Plan</div>
+    <div class="sec-tag"><i>12</i>Weekly Plan</div>
     <h2>一周的练后补给，要花多少钱？</h2>
     <p>按「训练日补 <b>45 g</b>（单餐上限）、休息日补 <b>25 g</b>」的假设，用当前偏好给一周七天各排一份麦当劳补给方案。切换上面的「最省钱 / 最清淡」，这张表会跟着变。</p>
   </div>
   <div class="week-sum" id="weekSum"></div>
   <div class="daylist" id="weekDays"></div>
+</section>
+
+<!-- ============ 13. 分享卡 ============ -->
+<section class="alt" id="share">
+  <div class="sec-head">
+    <div class="sec-tag"><i>13</i>Share Card</div>
+    <h2>把结论带走</h2>
+    <p>页面做得再好看，带不走就没有传播力。这里把上面的求解结果渲染成一张可以直接发出去的图。
+      卡片上的数字全部来自同一个求解器——回去改一遍滑块再导出，卡片会跟着变。</p>
+  </div>
+  <div class="share-grid">
+    <div class="panel" style="padding:16px">
+      <canvas id="shareCanvas" width="1120" height="1340"></canvas>
+    </div>
+    <div class="panel">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">配文（可直接复制）</h3>
+      <textarea class="copy" id="shareText" readonly></textarea>
+      <div class="btn-row">
+        <button class="btn primary" id="dlPng">下载 PNG</button>
+        <button class="btn ghost" id="copyText">复制配文</button>
+      </div>
+      <div class="msg info" id="shareMsg" style="display:none"></div>
+      <div class="hint" style="margin-top:12px">
+        卡片由浏览器 canvas 本地绘制，不上传任何数据。数值随「缺口求解」里的滑块实时变化。
+      </div>
+    </div>
+  </div>
 </section>
 
 </div>
@@ -494,8 +699,10 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
         <ul>
           <li>营养成分 <code>list-nutrition-foods</code></li>
           <li>实时菜单与价格 <code>query-meals</code></li>
-          <li>门店 麦当劳成都万达餐厅</li>
-          <li>采样日期 <span class="num">2026-10-15</span></li>
+          <li>历史订单 <code>order-list</code></li>
+          <li>优惠券 <code>query-my-coupons</code> / <code>query-store-coupons</code></li>
+          <li>门店 <span id="fStore">麦当劳成都万达餐厅</span></li>
+          <li>采样日期 <span class="num" id="fDate">2026-10-15</span></li>
         </ul>
       </div>
       <div>
@@ -503,17 +710,19 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
         <ul>
           <li>蛋白密度 = 蛋白 ÷ 热量 × 100</li>
           <li>蛋白性价比 = 蛋白 ÷ 价格</li>
-          <li>钠负荷 = 钠 ÷ 蛋白 × 10</li>
+          <li>钠 / 脂肪 / 钙负荷 = 各自 ÷ 蛋白 × 10</li>
           <li>最优组合 = 有约束的穷举搜索</li>
           <li>单餐上限 45 g 蛋白 / 900 kcal</li>
+          <li>帕累托前沿 = 三维非支配解集</li>
         </ul>
       </div>
       <div>
         <h4>如何自己跑一遍</h4>
         <ul>
           <li><code>python scripts/build_dataset.py</code></li>
-          <li><code>export MCD_MCP_TOKEN=...</code></li>
-          <li><code>python scripts/coach.py --weight 72</code></li>
+          <li><code>python scripts/build_coupons.py</code></li>
+          <li><code>python scripts/render_dashboard.py</code></li>
+          <li><code>python scripts/serve.py</code></li>
           <li><code>node tests/test_solver_parity.mjs</code></li>
         </ul>
       </div>
@@ -526,8 +735,30 @@ footer code{font-family:var(--mono);font-size:12px;color:var(--ink-2);background
 </footer>
 
 <script>
-const DATA = /*__DATA__*/;
-const ORDERS = /*__ORDERS__*/;
+/* ----------------------------------------------------------------------------
+   数据层：这份页面有两种用法，同一份代码同时支持。
+
+   1) 静态演示模式（GitHub Pages）
+      数据是构建时注入的快照，就是你正在看的这份。
+   2) 本地工具模式（python scripts/serve.py）
+      serve.py 会在服务这个页面时注入 window.__LOCAL__。
+      你在页面上填入自己的 MCP Token 后，本机后端代你调 MCP 拉数据，
+      把结果写进 sessionStorage 并刷新页面，让整页用新数据重新初始化一遍。
+
+   为什么用「写入 sessionStorage + 刷新」而不是在页面里就地替换数据？
+      因为派生指标、预计算的候选解、图表全都是在脚本加载时算出来的。
+      就地替换数据必然留下半个旧状态，而整页重新初始化能保证
+      从预计算到渲染的每一层都基于同一份数据。代价只是闪一下。
+   ---------------------------------------------------------------------------- */
+const LIVE = (() => {
+  try { return JSON.parse(sessionStorage.getItem('mcmuscle.live') || 'null'); }
+  catch (e) { return null; }
+})();
+const LOCAL = window.__LOCAL__ || null;   // 只有 serve.py 会注入它
+
+let DATA    = (LIVE && LIVE.menu)    || /*__DATA__*/;
+let ORDERS  = (LIVE && LIVE.orders)  || /*__ORDERS__*/;
+let COUPONS = (LIVE && LIVE.coupons) || /*__COUPONS__*/;
 
 /* ---SOLVER-BEGIN--- */
 /* ============================================================
@@ -646,13 +877,15 @@ renderRank(el('rankValue'), byValue.slice(0,12), 'proteinPerYuan', v=>v.toFixed(
    ============================================================ */
 const QUALITY_POOL = priced.filter(i=>i.protein>=12).map(i=>({
   ...i,
-  sodiumPer10g: +(i.sodium/i.protein*10).toFixed(0),
-  fatPer10g:    +(i.fat/i.protein*10).toFixed(1),
+  sodiumPer10g:  +(i.sodium/i.protein*10).toFixed(0),
+  fatPer10g:     +(i.fat/i.protein*10).toFixed(1),
+  // 钙是「越多越好」，方向与钠/脂肪相反，所以排序时会单独处理方向
+  calciumPer10g: +(i.calcium/i.protein*10).toFixed(0),
 }));
 
 function renderQuality(key){
-  const sorted = [...QUALITY_POOL].sort((a,b)=> a[key]-b[key]);
-  const best = sorted[0].name;
+  const asc = key !== 'calcium';
+  const sorted = [...QUALITY_POOL].sort((a,b)=> asc ? a[key]-b[key] : b[key]-a[key]);
   el('qBody').innerHTML = sorted.map((it,i)=>`
     <tr class="${i===0?'best':''}">
       <td><span class="rk">${i+1}</span>${it.name}${i===0?'<span class="pill">最优</span>':''}</td>
@@ -662,16 +895,21 @@ function renderQuality(key){
       <td>${it.proteinPer100kcal.toFixed(2)}</td>
       <td>${it.sodiumPer10g} mg</td>
       <td>${it.fatPer10g} g</td>
+      <td>${it.calciumPer10g} mg</td>
     </tr>`).join('');
 
-  const names = {sodium:'钠负荷', fat:'脂肪负荷', value:'性价比'};
+  const names = {sodium:'钠负荷', fat:'脂肪负荷', value:'性价比', calcium:'钙摄入'};
   const sodiumRank = [...QUALITY_POOL].sort((a,b)=>a.sodiumPer10g-b.sodiumPer10g);
+  const calciumRank = [...QUALITY_POOL].sort((a,b)=>b.calciumPer10g-a.calciumPer10g);
   el('qNote').innerHTML =
     `当前按「${names[key]}」排序。` +
     `同样 10 g 蛋白质，最清淡的「${sodiumRank[0].name}」只附带 <b>${sodiumRank[0].sodiumPer10g} mg</b> 钠，` +
     `而最高的「${sodiumRank[sodiumRank.length-1].name}」要 <b>${sodiumRank[sodiumRank.length-1].sodiumPer10g} mg</b>——` +
     `差 <b>${(sodiumRank[sodiumRank.length-1].sodiumPer10g / sodiumRank[0].sodiumPer10g).toFixed(1)} 倍</b>。` +
-    `蛋白质量不只是克数。`;
+    `<br>钙的方向相反：同样是 10 g 蛋白质，` +
+    `「${calciumRank[0].name}」能给到 <b>${calciumRank[0].calciumPer10g} mg</b> 钙，` +
+    `而「${calciumRank[calciumRank.length-1].name}」只有 <b>${calciumRank[calciumRank.length-1].calciumPer10g} mg</b>。` +
+    `蛋白质量从来不只等于克数。`;
 }
 el('qSeg').addEventListener('click', e=>{
   const btn = e.target.closest('button'); if(!btn) return;
@@ -981,6 +1219,7 @@ function compute(){
   el('vWeight').textContent=weight; el('vFactor').textContent=factor.toFixed(1);
   el('vConsumed').textContent=consumed; el('vBudget').textContent=budget;
   renderCurve(ask==='budget' ? budget : null);
+  refreshShare();   // 分享卡跟着滑块走：数字只应该有一个来源
 
   /* ---- 预算模式 ---- */
   if(ask==='budget'){
@@ -1094,6 +1333,705 @@ el('modeSeg').addEventListener('click',e=>{
 
 compute();
 renderWeek(mode);
+
+/* 把「当前滑块状态 -> 本餐方案」这一步抽出来，供分享卡复用，
+   避免分享卡自己再算一遍导致跟页面上显示的数字不一致 */
+function currentPlan(){
+  const weight = +el('weight').value;
+  const factor = +el('factor').value;
+  const consumed = +el('consumed').value;
+  const target = Math.round(weight * factor);
+  const remaining = fmt1(target - consumed);
+  const mealGap = Math.max(0, Math.min(remaining, CFG.MEAL_CAP));
+  return { weight, factor, consumed, target, remaining, mealGap, plan: solve(mealGap, mode) };
+}
+
+/* ============================================================
+   12. 本地工具模式：把这份面板接到你自己的账号上
+   ============================================================ */
+const LIVE_STATE = { connected:false, connectedAt:null, toolCount:0,
+                     store:null, stores:[], draft:'', busy:false, msg:null, msgKind:'info' };
+
+async function api(path, opts){
+  const res = await fetch(path, {
+    ...(opts||{}),
+    headers: {
+      'X-McMuscle-Key': LOCAL.sessionKey,
+      'Content-Type': 'application/json',
+      ...((opts && opts.headers) || {}),
+    },
+  });
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch(e){ data = { error: text.slice(0, 200) }; }
+  if(!res.ok) throw new Error((data && data.error) || ('HTTP ' + res.status));
+  return data;
+}
+
+function setLiveMsg(kind, text){
+  LIVE_STATE.msgKind = kind;
+  LIVE_STATE.msg = text;
+  renderLive();
+}
+
+function demoPanel(){
+  return `
+  <div class="panel">
+    <span class="live-state demo"><span class="dot"></span>演示快照模式</span>
+    <h3>你现在看到的是我账号里的数据</h3>
+    <div class="sub">菜单价格来自成都万达餐厅 2026-10-15 的采样，订单来自我自己的账号。
+      数字都是真的，但它不是你的。</div>
+    <ul class="steps">
+      <li><b>1</b><span>这个页面部署在 GitHub Pages 上是纯静态的，
+        浏览器<b>没法</b>直接连麦当劳 MCP——我们实测过，
+        <code>mcp.mcd.cn</code> 的响应里没有 <code>Access-Control-Allow-Origin</code>，跨域请求会被直接拦掉。</span></li>
+      <li><b>2</b><span>所以在本地跑一个只监听 <code>127.0.0.1</code> 的小服务，由它代你调 MCP，
+        页面就能用上你自己的门店、订单和优惠券。</span></li>
+      <li><b>3</b><span>你的 Token 只存在本机进程内存里，不落盘、不上传、不进日志。</span></li>
+    </ul>
+  </div>`;
+}
+
+function demoStepsPanel(){
+  return `
+  <div class="panel">
+    <h3>三条路，按门槛从低到高</h3>
+    <div class="sub">同一个求解器，三种用法。</div>
+    <ul class="steps">
+      <li><b>A</b><span><b>直接用现在的页面</b>——拖滑块算你自己的蛋白缺口。
+        菜单价格是采样值，但算法和结论都成立。</span></li>
+      <li><b>B</b><span><b>本地跑一遍</b>，接上你自己的账号（推荐）。</span></li>
+      <li><b>C</b><span><b>装进 WorkBuddy</b> 当技能用，直接问
+        「我今晚还差 40g 蛋白，在麦当劳点什么」。</span></li>
+    </ul>
+    <pre class="code"><span class="c"># 1. 生成页面</span>
+python scripts/render_dashboard.py
+
+<span class="c"># 2. 起本地服务（自动打开浏览器）</span>
+python scripts/serve.py
+
+<span class="c"># 想让 Token 完全不出现在命令行，也可以用环境变量</span>
+export MCD_MCP_TOKEN=你的token
+python scripts/serve.py</pre>
+    <div class="hint">Token 在这里领：open.mcd.cn/mcp。本服务只监听 127.0.0.1，
+      校验 Host 头防 DNS rebinding，拒绝一切跨站请求，并且每次启动生成一个随机会话密钥。</div>
+  </div>`;
+}
+
+function liveConnectCard(){
+  if(LIVE_STATE.connected){
+    return `
+    <div class="panel">
+      <span class="live-state on"><span class="dot"></span>已连接你的账号</span>
+      <h3>连接成功</h3>
+      <div class="sub">服务端可用工具 ${LIVE_STATE.toolCount} 个${LIVE_STATE.connectedAt?` · ${LIVE_STATE.connectedAt}`:''}</div>
+      <div class="msg ok">Token 只保存在本机进程内存中。停止服务（Ctrl+C）即失效。</div>
+      <div class="btn-row">
+        <button class="btn ghost" id="btnDisconnect">断开连接</button>
+        ${LIVE? '<button class="btn ghost" id="btnReset">恢复演示数据</button>':''}
+      </div>
+    </div>`;
+  }
+  return `
+  <div class="panel">
+    <span class="live-state off"><span class="dot"></span>未连接</span>
+    <h3>第一步：连接你的麦当劳账号</h3>
+    <div class="sub">在 <a href="https://open.mcd.cn/mcp" target="_blank" rel="noopener">open.mcd.cn/mcp</a>
+      领取 MCP Token，粘贴到下面。它会发到本机 127.0.0.1:${LOCAL.port}，不经过任何第三方。</div>
+    <input type="password" id="tokenInput" placeholder="粘贴你的 MCD_MCP_TOKEN" autocomplete="off"
+           value="${LIVE_STATE.draft.replace(/"/g,'&quot;')}">
+    <div class="btn-row">
+      <button class="btn primary" id="btnConnect" ${LIVE_STATE.busy?'disabled':''}>
+        ${LIVE_STATE.busy?'连接中…':'连接'}</button>
+    </div>
+    <div class="hint">Token 不写入磁盘、不回显、不进日志；页面上的输入框在连接完成后就会被替换掉。</div>
+  </div>`;
+}
+
+function livePullCard(){
+  if(!LIVE_STATE.connected){
+    return `
+    <div class="panel">
+      <h3>第二步：选门店，然后拉数据</h3>
+      <div class="sub">连上账号后，这里会列出你附近的门店。</div>
+      <ul class="steps">
+        <li><b>→</b><span>选门店是为了拿到<b>当地当天的真实菜单价格</b>——价格是门店级的，
+          换一家店数字就会变。</span></li>
+        <li><b>→</b><span>然后一起拉取：你的历史订单、你卡包里的优惠券、官方营养表。</span></li>
+        <li><b>→</b><span>拉完页面会用你自己的数据重新初始化，
+          下面所有板块都会跟着变。</span></li>
+      </ul>
+    </div>`;
+  }
+  const list = LIVE_STATE.stores.map(s=>`
+      <button class="store${LIVE_STATE.store && LIVE_STATE.store.storeCode===s.storeCode?' on':''}"
+              data-code="${s.storeCode}" data-name="${(s.storeName||'').replace(/"/g,'')}">
+        <span class="sc">${s.storeCode}</span>
+        <span class="sn">${s.storeName||''}</span>
+        ${s.distance!=null?`<span class="sd">${s.distance}m</span>`:''}
+      </button>`).join('');
+  return `
+  <div class="panel">
+    <span class="live-state on"><span class="dot"></span>已连接</span>
+    <h3>第二步：选门店，然后拉数据</h3>
+    <div class="sub">搜索你附近的门店。价格是门店级的，选错了下面的排名会不准。</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <input type="text" id="cityInput" placeholder="城市，例如 成都" value="${LIVE_STATE.city||''}">
+      <input type="text" id="kwInput" placeholder="位置关键词，例如 万达" value="${LIVE_STATE.kw||''}">
+    </div>
+    <div class="btn-row">
+      <button class="btn gold sm" id="btnSearchStores" ${LIVE_STATE.busy?'disabled':''}>搜索门店</button>
+      <button class="btn primary" id="btnPull" ${(!LIVE_STATE.store||LIVE_STATE.busy)?'disabled':''}>
+        ${LIVE_STATE.busy?'拉取中…':'拉取我的数据并重算'}</button>
+    </div>
+    ${LIVE_STATE.store?`<div class="msg ok">已选：${LIVE_STATE.store.storeName||''}（${LIVE_STATE.store.storeCode}）</div>`:''}
+    <div class="store-list">${list}</div>
+    ${LIVE_STATE.msg?`<div class="msg ${LIVE_STATE.msgKind}">${LIVE_STATE.msg}</div>`:''}
+  </div>`;
+}
+
+function renderLive(){
+  const box = el('liveGrid');
+  if(!box) return;
+  if(!LOCAL){
+    box.innerHTML = demoPanel() + demoStepsPanel();
+    return;
+  }
+  box.innerHTML = liveConnectCard() + livePullCard();
+  bindLive();
+}
+
+function bindLive(){
+  const $ = id => el(id);
+  if($('tokenInput')) $('tokenInput').addEventListener('input', e=>{ LIVE_STATE.draft = e.target.value; });
+  if($('btnConnect')) $('btnConnect').addEventListener('click', async ()=>{
+    const token = (LIVE_STATE.draft || '').trim();
+    if(!token) return setLiveMsg('err','请先粘贴 MCP Token');
+    LIVE_STATE.busy = true; setLiveMsg('info','正在验证 Token…');
+    try{
+      const r = await api('/api/connect', { method:'POST', body: JSON.stringify({ token }) });
+      LIVE_STATE.connected = true; LIVE_STATE.connectedAt = r.connectedAt;
+      LIVE_STATE.toolCount = r.toolCount; LIVE_STATE.draft = '';
+      LIVE_STATE.busy = false; LIVE_STATE.msg = null;
+      renderLive();
+    }catch(err){
+      LIVE_STATE.busy = false;
+      setLiveMsg('err', '连接失败：' + err.message);
+    }
+  });
+  if($('btnDisconnect')) $('btnDisconnect').addEventListener('click', async ()=>{
+    try{ await api('/api/disconnect', { method:'POST', body:'{}' }); }catch(e){}
+    LIVE_STATE.connected = false; LIVE_STATE.stores = []; LIVE_STATE.store = null;
+    LIVE_STATE.msg = null; LIVE_STATE.toolCount = 0;
+    renderLive();
+  });
+  if($('btnReset')) $('btnReset').addEventListener('click', ()=>{
+    try{ sessionStorage.removeItem('mcmuscle.live'); }catch(e){}
+    location.reload();
+  });
+  if($('cityInput')) $('cityInput').addEventListener('input', e=>{ LIVE_STATE.city = e.target.value; });
+  if($('kwInput')) $('kwInput').addEventListener('input', e=>{ LIVE_STATE.kw = e.target.value; });
+  if($('btnSearchStores')) $('btnSearchStores').addEventListener('click', async ()=>{
+    const city = (LIVE_STATE.city||'').trim(), kw = (LIVE_STATE.kw||'').trim();
+    if(!city || !kw) return setLiveMsg('err','搜索门店需要同时填城市和关键词');
+    LIVE_STATE.busy = true; setLiveMsg('info','正在搜索门店…');
+    try{
+      const r = await api('/api/stores?searchType=2&city=' + encodeURIComponent(city)
+                          + '&keyword=' + encodeURIComponent(kw));
+      LIVE_STATE.stores = r.stores || [];
+      LIVE_STATE.busy = false;
+      if(!LIVE_STATE.stores.length) LIVE_STATE.msg = '没有搜到门店，换个关键词试试';
+      else { LIVE_STATE.msg = null; LIVE_STATE.msgKind = 'info'; }
+      renderLive();
+    }catch(err){ LIVE_STATE.busy = false; setLiveMsg('err','搜索失败：' + err.message); }
+  });
+  [...document.querySelectorAll('.store')].forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      LIVE_STATE.store = { storeCode: btn.dataset.code, storeName: btn.dataset.name };
+      renderLive();
+    });
+  });
+  if($('btnPull')) $('btnPull').addEventListener('click', pullLiveData);
+}
+
+async function pullLiveData(){
+  const store = LIVE_STATE.store;
+  if(!store) return;
+  LIVE_STATE.busy = true; setLiveMsg('info','正在拉取菜单…（这一步最慢）');
+  try{
+    const menu = await api('/api/menu?storeCode=' + encodeURIComponent(store.storeCode));
+    setLiveMsg('info','正在对齐你的历史订单…');
+    const orders = await api('/api/orders');
+    setLiveMsg('info','正在读取你的优惠券…');
+    let coupons = null;
+    try{ coupons = await api('/api/coupons?storeCode=' + encodeURIComponent(store.storeCode)); }
+    catch(e){ coupons = null; }
+    sessionStorage.setItem('mcmuscle.live', JSON.stringify({
+      menu, orders, coupons, store, at: Date.now(),
+    }));
+    setLiveMsg('ok','拉取完成，正在用你的数据重新初始化页面…');
+    setTimeout(()=>location.reload(), 500);
+  }catch(err){
+    LIVE_STATE.busy = false;
+    setLiveMsg('err','拉取失败：' + err.message);
+  }
+}
+
+if(LOCAL && LIVE){
+  const eb = document.querySelector('.eyebrow');
+  if(eb) eb.insertAdjacentHTML('beforeend',
+    '<b style="color:var(--yellow);margin-left:6px">· 实时数据已载入</b>');
+}
+
+/* ============================================================
+   13. 限时券 × 蛋白效率
+   ============================================================ */
+const gvText = e => e.gPerYuanLo == null
+  ? '无法对齐'
+  : (e.gPerYuanLo === e.gPerYuanHi ? e.gPerYuanLo + ' g/元'
+                                   : e.gPerYuanLo + '–' + e.gPerYuanHi + ' g/元');
+
+function renderCoupons(){
+  const C = COUPONS;
+  if(!C || !C.board || !C.board.length){
+    el('cpSum').innerHTML = '';
+    el('cpCal').innerHTML = '<div class="hint">这个数据源里没有优惠券信息。</div>';
+    el('cpList').innerHTML = '';
+    el('cpNote').textContent = '';
+    return;
+  }
+  const s = C.summary || {};
+  el('cpSum').innerHTML = `
+    <div><div class="k">卡包里的券</div><div class="v">${s.couponCount||0}<small>张</small></div></div>
+    <div><div class="k">能算出蛋白质</div><div class="v">${s.computable||0}<small>张</small></div></div>
+    <div><div class="k">无法对齐营养表</div><div class="v">${s.unmatched||0}<small>张</small></div></div>
+    <div><div class="k">早餐时段可用</div><div class="v">${s.breakfastCount||0}<small>张</small></div></div>
+    <div><div class="k">一周有券的天数</div><div class="v">${s.daysWithCoupon||0}<small>天</small></div></div>`;
+
+  const WD = ['周日','周一','周二','周三','周四','周五','周六'];
+  const todayWd = WD[new Date().getDay()];
+  el('cpCal').innerHTML = (C.calendar||[]).map(d=>`
+    <div class="cal-col${d.weekday===todayWd?' today':''}">
+      <div class="wd">${d.weekday}${d.weekday===todayWd?' · 今天':''}</div>
+      <div class="dt">${d.entries.length? d.entries[0].dateFrom : '—'}</div>
+      ${d.entries.length ? d.entries.map(e=>`
+        <span class="slot${e.confidence==='unmatched'?' un':''}${e.timeFrom && e.timeFrom<'12:00'?' win':''}">
+          <span class="t">${e.timeFrom||'—'}–${e.timeTo||'—'}</span>
+          <span class="nm">${e.title}</span>
+          <span class="v">¥${e.couponPrice} · ${gvText(e)}</span>
+        </span>`).join('') : '<span class="cal-empty">无可用券</span>'}
+    </div>`).join('');
+
+  const usable = C.board.filter(r=>r.gPerYuanHi != null).sort((a,b)=>b.gPerYuanHi-a.gPerYuanHi);
+  if(usable.length && byValue.length){
+    const best = usable[0];
+    const menuBest = byValue[0];
+    const costLo = best.couponPrice / best.proteinHi;
+    const costHi = best.couponPrice / best.proteinLo;
+    const menuCost = 1 / menuBest.proteinPerYuan;
+    el('cpRatio').innerHTML =
+      `¥${costLo.toFixed(2)}<small id="cpRatioLbl">券后每克蛋白最低可到</small>`;
+    el('cpInsightTitle').textContent =
+      `${best.title} 把每克蛋白的成本压到了 ¥${costLo.toFixed(2)}–${costHi.toFixed(2)}`;
+    el('cpInsight').innerHTML =
+      `这张券 ¥${best.couponPrice}，在官方营养表里对应 <b>${best.proteinLo===best.proteinHi
+        ? best.proteinLo : best.proteinLo+'–'+best.proteinHi} g</b> 蛋白质。` +
+      `菜单原价里最划算的「${menuBest.name}」是 ¥${menuCost.toFixed(2)}/克。` +
+      `也就是说：<b>早餐窗口最好的情况比全天冠军还便宜，最差的情况反而更贵</b>——` +
+      `这不是我在含糊，而是券面信息本身只能支撑一个区间。` +
+      `把它如实画成区间，比挑一个好看的数字有用。`;
+  } else {
+    el('cpRatio').innerHTML = '—<small id="cpRatioLbl">暂时算不出</small>';
+    el('cpInsightTitle').textContent = '这张券的蛋白质还无法确定';
+    el('cpInsight').textContent = '营养表里没有能对齐的条目，见下方的逐张说明。';
+  }
+
+  const unmatched = C.board.filter(r=>r.gPerYuanLo == null);
+  const note = [];
+  if(unmatched.length){
+    note.push(`这 ${C.board.length} 张券里有 <b>${unmatched.length} 张算不出蛋白质</b>：` +
+      unmatched.map(r=>`「${r.title}」`).join('、') +
+      `。原因是券名里的餐品在官方营养表里没有对应条目，或者券面没写明包含什么。`);
+    note.push('这三类情况我们一律标成「无法对齐」，<b>没有拿相近餐品去替换</b>——' +
+      '宁可显示「算不出来」，也不给一个看起来漂亮但站不住的数字。');
+  }
+  note.push('另外要说明：<code>query-my-coupons</code> 返回的是你卡包里的资产，' +
+    '它<b>不校验门店和渠道能否使用</b>。真正「这家店现在能用哪张」要看 <code>query-store-coupons</code>。');
+  el('cpNote').innerHTML = note.join(' ');
+
+  el('cpList').innerHTML = C.board.map(r=>`
+    <div class="cp">
+      <div class="top">
+        <span class="cf ${r.confidence}">${r.confidenceLabel}</span>
+        <span class="ttl">${r.title}</span>
+        <span class="win">${(r.weekdays||[]).join('/')} ${r.timeFrom}–${r.timeTo}</span>
+        <span class="prc">¥${r.couponPrice}</span>
+      </div>
+      <div class="rng">${r.gPerYuanLo == null
+        ? '<span style="color:var(--dim)">无法计算出蛋白质，因此不参与任何排名</span>'
+        : `蛋白 <b>${r.proteinLo===r.proteinHi ? r.proteinLo : r.proteinLo+'–'+r.proteinHi} g</b>
+           · 每克蛋白 ¥${(r.couponPrice/r.proteinHi).toFixed(2)}${r.proteinLo!==r.proteinHi?'–'+(r.couponPrice/r.proteinLo).toFixed(2):''}
+           · 性价比 <b>${gvText(r)}</b>`}</div>
+      ${(r.candidates && r.candidates.length) ? `
+        <div class="basis">映射到：${r.candidates.map(c=>
+          c.items.map(i=>i.name).join(' + ') + '（' + c.protein + ' g 蛋白 / ' + c.energyKcal + ' kcal）'
+        ).join('；')}</div>` : ''}
+      <div class="basis">依据：${r.basis}</div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   14. 早餐增肌窗口
+   ============================================================ */
+function renderBreakfast(){
+  const bf = DATA.items.filter(i=>i.category==='breakfast' && i.protein>0)
+                       .sort((a,b)=>b.proteinPer100kcal-a.proteinPer100kcal);
+  if(!bf.length){ el('bfBody').innerHTML=''; return; }
+  const priced = bf.filter(i=>i.price);
+  const bfCoupons = ((COUPONS && COUPONS.board) || [])
+    .filter(r=>r.timeFrom && r.timeFrom < '12:00');
+  const top = bf[0];
+  const maxProtein = bf.reduce((a,b)=>b.protein>a.protein?b:a);
+
+  el('bfSum').innerHTML = `
+    <div><div class="k">早餐餐品条目</div><div class="v">${bf.length}<small>项</small></div></div>
+    <div><div class="k">其中带菜单价格</div><div class="v">${priced.length}<small>项</small></div></div>
+    <div><div class="k">单份最高蛋白</div><div class="v">${maxProtein.protein}<small>g</small></div></div>
+    <div><div class="k">最高蛋白密度</div><div class="v">${top.proteinPer100kcal.toFixed(2)}<small>g/100kcal</small></div></div>
+    <div><div class="k">早餐时段可用券</div><div class="v">${bfCoupons.length}<small>张</small></div></div>`;
+
+  el('bfBody').innerHTML = bf.slice(0,12).map((it,i)=>`
+    <tr class="${i===0?'best':''}">
+      <td><span class="rk">${i+1}</span>${it.name}${i===0?'<span class="pill">密度最高</span>':''}</td>
+      <td>${it.protein} g</td>
+      <td>${it.energyKcal} kcal</td>
+      <td>${it.fat} g</td>
+      <td>${it.proteinPer100kcal.toFixed(2)}</td>
+      <td>${(it.sodium/it.protein*10).toFixed(0)} mg</td>
+    </tr>`).join('');
+
+  const priced_any = DATA.items.filter(i=>i.price && i.proteinSource);
+  const nonBfBest = priced_any.length
+    ? Math.min(...priced_any.map(i=>i.price/i.protein)) : null;
+  el('bfNote').innerHTML =
+    `注意第三列：<b>这 ${bf.length} 项早餐餐品里，有 ${priced.length} 项能从菜单拿到价格</b>。` +
+    `不是数据缺失，而是早餐本身限时供应，到店菜单不返回它的价格。` +
+    `所以任何只靠菜单价格做分析的方案，都会整块漏掉这个时段——而它是全天蛋白密度最高的一段：` +
+    `「${maxProtein.name}」单份 <b>${maxProtein.protein} g</b> 蛋白 / 仅 ${maxProtein.energyKcal} kcal。` +
+    (bfCoupons.length
+      ? `再看上面的券：早餐时段一共有 <b>${bfCoupons.length} 张</b>券，` +
+        `一周里每一天都有一张。` +
+        (nonBfBest != null
+          ? `非早餐时段菜单里每克蛋白的最低成本是 <b>¥${nonBfBest.toFixed(2)}</b>，` +
+            `而早餐券的最优情况能到 <b>¥${(bfCoupons
+              .filter(r=>r.gPerYuanHi!=null)
+              .reduce((m,r)=>Math.min(m, r.couponPrice/r.proteinHi), Infinity) || 0).toFixed(2)}</b>。`
+          : '')
+      : '') +
+    `<br>顺带一句：早餐的钠也不低（${maxProtein.name} ${maxProtein.sodium} mg），` +
+    `蛋白密度不能只看蛋白，上面的「钠/10g蛋白」列就是为这个准备的。`;
+}
+
+/* ============================================================
+   15. 帕累托前沿：三维里真正没有更好选择的餐品
+   ============================================================ */
+function paretoFront(items){
+  const front = [];
+  for(const a of items){
+    let dominated = false;
+    for(const b of items){
+      if(a === b) continue;
+      const noWorse = b.protein >= a.protein
+                   && b.proteinPer100kcal >= a.proteinPer100kcal
+                   && b.price <= a.price;
+      const better  = b.protein > a.protein
+                   || b.proteinPer100kcal > a.proteinPer100kcal
+                   || b.price < a.price;
+      if(noWorse && better){ dominated = true; break; }
+    }
+    if(!dominated) front.push(a);
+  }
+  return front;
+}
+
+function dominatorsOf(target, items){
+  return items.filter(b => b !== target
+    && b.protein >= target.protein
+    && b.proteinPer100kcal >= target.proteinPer100kcal
+    && b.price <= target.price
+    && (b.protein > target.protein || b.proteinPer100kcal > target.proteinPer100kcal
+        || b.price < target.price));
+}
+
+function renderPareto(){
+  const pool = DATA.items.filter(i=>i.proteinSource && i.price);
+  if(!pool.length){ el('parBody').innerHTML=''; return; }
+  const front = paretoFront(pool).sort((a,b)=>b.protein-a.protein);
+
+  const densityChamp = [...pool].sort((a,b)=>b.proteinPer100kcal-a.proteinPer100kcal)[0];
+  const valueChamp   = [...pool].sort((a,b)=>b.proteinPerYuan-a.proteinPerYuan)[0];
+  const proteinChamp = [...pool].sort((a,b)=>b.protein-a.protein)[0];
+
+  const tag = it => {
+    const t = [];
+    if(it === densityChamp) t.push('密度最高');
+    if(it === valueChamp)   t.push('性价比最高');
+    if(it === proteinChamp) t.push('单份蛋白最高');
+    return t.length ? t.join(' · ') : '取舍点';
+  };
+
+  el('parTiers').innerHTML = `
+    <span class="tier">候选餐品 ${pool.length} 项</span>
+    <span class="tier">帕累托前沿 ${front.length} 项（${(front.length/pool.length*100).toFixed(0)}%）</span>
+    <span class="tier">被支配 ${pool.length-front.length} 项</span>`;
+
+  el('parBody').innerHTML = front.slice(0, 18).map((it,i)=>`
+    <tr class="${i===0?'best':''}">
+      <td><span class="rk">${i+1}</span>${it.name}<span class="pill gold">${tag(it)}</span></td>
+      <td>${it.protein} g</td>
+      <td>${it.energyKcal} kcal</td>
+      <td>¥${it.price.toFixed(1)}</td>
+      <td>${it.proteinPerYuan.toFixed(2)}</td>
+      <td>${it.proteinPer100kcal.toFixed(2)}</td>
+    </tr>`).join('');
+
+  const FAMOUS = ['巨无霸','麦香鱼','麦乐鸡5块','麦辣鸡腿汉堡','板烧鸡腿堡','麦香鸡','中薯条'];
+  const found = [];
+  for(const name of FAMOUS){
+    const it = pool.find(x=>x.name===name);
+    if(!it) continue;
+    const dom = dominatorsOf(it, pool);
+    if(!dom.length) continue;
+    const best = dom.sort((a,b)=>
+      (b.protein-a.protein) - (a.price-b.price))[0];
+    found.push({ it, dom: best, count: dom.length });
+  }
+
+  el('parRatio').innerHTML =
+    `${found.length}<small>个名气餐品在三个维度上都被支配</small>`;
+
+  if(found.length){
+    el('parDominated').innerHTML = found.slice(0,4).map(f=>
+      `「<b>${f.it.name}</b>」（${f.it.protein} g 蛋白 / ${f.it.energyKcal} kcal / ¥${f.it.price.toFixed(1)}）` +
+      `被 <b>${f.dom.name}</b> 全面压制：${f.dom.protein} g 蛋白、${f.dom.energyKcal} kcal、` +
+      `¥${f.dom.price.toFixed(1)}——三项都不差，至少一项更好。` +
+      `它一共被 <b>${f.count}</b> 项餐品支配。`).join('<br>') +
+      `<br><span style="color:var(--dim)">这不是说别吃，而是说「有名」和「对目标最优」是两件事。` +
+      `这里只做客观的可支配判定，不涉及任何品牌或产品之间的比较。</span>`;
+  } else {
+    el('parDominated').textContent = '当前数据里没有出现明显的被支配名气餐品。';
+  }
+}
+
+/* ============================================================
+   16. 分享卡：把当前结论渲染成一张能发出去的图
+   ============================================================ */
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.arcTo(x+w, y,   x+w, y+h, r);
+  ctx.arcTo(x+w, y+h, x,   y+h, r);
+  ctx.arcTo(x,   y+h, x,   y,   r);
+  ctx.arcTo(x,   y,   x+w, y,   r);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines){
+  let line = '', lines = 0;
+  for(const ch of text){
+    if(ctx.measureText(line + ch).width > maxWidth && line){
+      ctx.fillText(line, x, y);
+      line = ch; y += lineHeight; lines++;
+      if(maxLines && lines >= maxLines) return y;
+    } else line += ch;
+  }
+  if(line) ctx.fillText(line, x, y);
+  return y + lineHeight;
+}
+
+function drawShare(){
+  const cv = el('shareCanvas'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const { weight, factor, target, remaining, mealGap, plan } = currentPlan();
+  const F = n => (n||0).toFixed(2);
+
+  ctx.fillStyle = '#fffbf0'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#da291c'; ctx.fillRect(0, 0, W, 440);
+  ctx.fillStyle = '#ffc72c'; ctx.fillRect(0, 440, W, 14);
+
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#ffc72c';
+  ctx.font = '600 30px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('麦门增肌师 · McMuscle', 72, 96);
+
+  ctx.fillStyle = 'rgba(255,255,255,.75)';
+  ctx.font = '26px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText(`${weight} kg × ${factor.toFixed(1)} g/kg = 目标 ${target} g 蛋白`, 72, 158);
+
+  if(plan){
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 84px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(`补 ${Math.round(mealGap)} g 蛋白`, 72, 272);
+    ctx.fillStyle = '#ffc72c';
+    ctx.font = 'bold 52px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(`¥${plan.totalPrice.toFixed(1)}  ·  ${plan.proteinPerYuan} g/元`, 72, 356);
+    ctx.fillStyle = 'rgba(255,255,255,.7)';
+    ctx.font = '24px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(`${plan.totalKcal} kcal · 脂肪 ${plan.totalFat} g · 钠 ${plan.totalSodium} mg`, 72, 404);
+  } else {
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 68px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('今天不用再补了', 72, 280);
+    ctx.fillStyle = 'rgba(255,255,255,.75)';
+    ctx.font = '30px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(`目标 ${target} g，已摄入 ${(target - remaining).toFixed(0)} g`, 72, 350);
+  }
+
+  let y = 540;
+  ctx.fillStyle = '#27251f';
+  ctx.font = '600 34px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText(plan ? '这一顿这么点' : '当前状态', 72, y);
+  y += 26;
+  ctx.strokeStyle = '#eee4d0'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(72, y); ctx.lineTo(W-72, y); ctx.stroke();
+  y += 58;
+
+  if(plan){
+    for(const it of plan.items){
+      ctx.fillStyle = '#da291c';
+      ctx.font = 'bold 30px "SF Mono",Consolas,monospace';
+      ctx.fillText(`×${it.qty}`, 72, y);
+      ctx.fillStyle = '#27251f';
+      ctx.font = '32px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText(it.name, 172, y);
+      ctx.fillStyle = '#7c7568';
+      ctx.font = '28px "SF Mono",Consolas,monospace';
+      const right = `${it.protein*it.qty} g · ¥${it.line.toFixed(1)}`;
+      ctx.fillText(right, W - 72 - ctx.measureText(right).width, y);
+      y += 62;
+      if(y > H - 430) break;
+    }
+  } else {
+    ctx.fillStyle = '#7c7568';
+    ctx.font = '30px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('蛋白质目标已经达成，不用再下单。', 72, y);
+    y += 62;
+  }
+
+  y += 16;
+  ctx.fillStyle = '#fff6db';
+  roundRect(ctx, 60, y - 4, W - 120, 190, 20);
+  ctx.fillStyle = '#8a6400';
+  ctx.font = '600 28px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('同样的钱，换个点法', 92, y + 52);
+  ctx.fillStyle = '#27251f';
+  ctx.font = '30px "PingFang SC","Microsoft YaHei",sans-serif';
+  if(plan && byValue.length){
+    const money = plan.totalPrice;
+    const alt = bestUnderBudget(money, 'protein');
+    const altP = alt ? alt.totalProtein : 0;
+    ctx.fillText(`预算 ¥${money.toFixed(1)}：本方案 ${plan.totalProtein} g 蛋白，`, 92, y + 108);
+    ctx.fillText(`菜单里最多可买到 ${Math.round(altP)} g。`, 92, y + 156);
+  } else {
+    ctx.fillText(`在 ¥${(byValue[0] ? 1/byValue[0].proteinPerYuan : 0).toFixed(2)}/克 的水平上，`, 92, y + 108);
+    ctx.fillText('麦当劳的蛋白质其实很划算。', 92, y + 156);
+  }
+  y += 236;
+
+  ctx.fillStyle = '#7c7568';
+  ctx.font = '25px "PingFang SC","Microsoft YaHei",sans-serif';
+  wrapText(ctx,
+    '数据来自麦当劳 MCP 官方营养表与实时菜单。算法在全部候选组合里穷举求解，' +
+    '前端与 Python 端 12 个场景逐字段对拍一致。',
+    72, y, W - 144, 40, 3);
+
+  y = H - 84;
+  ctx.fillStyle = '#da291c';
+  ctx.fillRect(0, y - 36, W, 4);
+  ctx.fillStyle = '#a79f90';
+  ctx.font = '25px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText(`样本 ${DATA.items.length} 项餐品 · 采样门店 ${(DATA.source && DATA.source.store
+    && DATA.source.store.storeName) || '—'}`, 72, H - 32);
+  ctx.textAlign = 'right';
+  ctx.fillText('麦当劳程序员创意开发大赛参赛作品 · 非官方产品', W - 72, H - 32);
+  ctx.textAlign = 'left';
+}
+
+function shareText(){
+  const { weight, factor, target, remaining, mealGap, plan } = currentPlan();
+  if(!plan){
+    return `我今天的蛋白质目标 ${target} g 已经达成（已摄入 ${(target-remaining).toFixed(0)} g），不用再补。\n`
+         + `—— 麦门增肌师，用麦当劳 MCP 官方营养数据算的。`;
+  }
+  const list = plan.items.map(i=>`${i.name} ×${i.qty}`).join(' + ');
+  return `今天还差 ${Math.round(mealGap)} g 蛋白。\n`
+       + `在麦当劳点了：${list}\n`
+       + `共计 ¥${plan.totalPrice.toFixed(1)}，拿到 ${plan.totalProtein} g 蛋白，`
+       + `${plan.totalKcal} kcal，蛋白性价比 ${plan.proteinPerYuan} g/元。\n`
+       + `（体重 ${weight}kg，目标 ${factor.toFixed(1)} g/kg）\n`
+       + `—— 用麦当劳 MCP 官方营养表 + 实时菜单穷举求解，不是凭感觉点的。`;
+}
+
+function refreshShare(){
+  drawShare();
+  const ta = el('shareText');
+  if(ta) ta.value = shareText();
+}
+
+(function bindShare(){
+  const dl = el('dlPng'), cp = el('copyText'), msg = el('shareMsg');
+  const flash = (text, kind) => {
+    if(!msg) return;
+    msg.textContent = text;
+    msg.className = 'msg ' + (kind || 'info');
+    msg.style.display = '';
+    setTimeout(()=>{ msg.style.display = 'none'; }, 3200);
+  };
+  if(dl) dl.addEventListener('click', ()=>{
+    const cv = el('shareCanvas');
+    cv.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'mcmuscle-report.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+      flash('已生成 PNG，检查一下浏览器的下载。', 'ok');
+    }, 'image/png');
+  });
+  if(cp) cp.addEventListener('click', async ()=>{
+    const ta = el('shareText');
+    try{
+      await navigator.clipboard.writeText(ta.value);
+      flash('配文已复制到剪贴板。', 'ok');
+    }catch(e){
+      ta.removeAttribute('readonly'); ta.select();
+      document.execCommand('copy'); ta.setAttribute('readonly','');
+      flash('已复制（使用了兼容方式）。', 'ok');
+    }
+  });
+})();
+
+/* 新板块统一初始化 */
+renderLive();
+renderCoupons();
+renderBreakfast();
+renderPareto();
+refreshShare();
+
+/* 页脚与标题跟随实际数据源，避免「截图里写着 A 店、复现出来是 B 店」 */
+(function fillSourceMeta(){
+  const st = DATA.source && DATA.source.store;
+  if(st && el('fStore')) el('fStore').textContent = st.storeName || st.storeCode || '—';
+  if(DATA.source && DATA.source.capturedAt && el('fDate')) {
+    el('fDate').textContent = DATA.source.capturedAt;
+  }
+  if(byValue.length){
+    const cost = (1 / byValue[0].proteinPerYuan).toFixed(2);
+    document.title = `麦门增肌师 · 在麦当劳增肌，一克蛋白质最低只要 ¥${cost}`;
+  }
+})();
 </script>
 </body>
 </html>

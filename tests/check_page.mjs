@@ -30,7 +30,8 @@ console.log(`检查 ${path.relative(ROOT, PAGE)}（${(html.length / 1024).toFixe
 
 // 1. 占位符
 console.log('1. 占位符替换');
-for (const token of ['/*__DATA__*/', '/*__ORDERS__*/', '__DATA__', '__ORDERS__']) {
+for (const token of ['/*__DATA__*/', '/*__ORDERS__*/', '/*__COUPONS__*/',
+                     '__DATA__', '__ORDERS__', '__COUPONS__']) {
   if (html.includes(token)) fail(`残留占位符 ${token}`);
 }
 if (!failures) pass('没有残留占位符');
@@ -51,23 +52,62 @@ if (scripts.length === 0) {
   });
 }
 
-// 3. 数据注入
-console.log('\n3. 数据注入');
-const dataMatch = html.match(/const DATA = (\{[\s\S]*?\});\r?\nconst ORDERS = (\{[\s\S]*?\});\r?\n/);
-if (!dataMatch) {
-  fail('无法从页面里解析出 DATA / ORDERS');
+// 2b. 求解器标记必须在，否则对拍测试抽不到代码
+if (html.includes('/* ---SOLVER-BEGIN--- */') && html.includes('/* ---SOLVER-END--- */')) {
+  pass('求解器标记完整（对拍测试能抽到代码）');
 } else {
-  try {
-    const data = JSON.parse(dataMatch[1]);
-    const orders = JSON.parse(dataMatch[2]);
+  fail('求解器标记缺失，会静默让对拍测试失效');
+}
+
+// 3. 数据注入
+//    数据声明的形态是： let DATA = (LIVE && LIVE.menu) || {…};
+//    这里按行取等号右边的内容再 JSON.parse，比跨行正则稳。
+console.log('\n3. 数据注入');
+const grab = (name) => {
+  const re = new RegExp(
+    `^let\\s+${name}\\s*=\\s*\\(LIVE && LIVE\\.[a-zA-Z]+\\)\\s*\\|\\|\\s*(.*);\\r?$`, 'm');
+  const m = html.match(re);
+  return m ? m[1] : null;
+};
+
+let data = null, orders = null, coupons = null;
+try {
+  const rawData = grab('DATA'), rawOrders = grab('ORDERS'), rawCoupons = grab('COUPONS');
+  if (!rawData || !rawOrders || !rawCoupons) {
+    fail('无法从页面里解析出 DATA / ORDERS / COUPONS');
+  } else {
+    data = JSON.parse(rawData);
+    orders = JSON.parse(rawOrders);
+    coupons = JSON.parse(rawCoupons);
     pass(`DATA 合法：${data.items.length} 项餐品`);
-    pass(`ORDERS 合法：${orders.summary.orderCount} 笔订单，覆盖率 ${orders.summary.coverage}%`);
+    pass(`ORDERS 合法：${orders.summary.orderCount} 笔订单，营养覆盖率 ${orders.summary.coverage}%`);
+    pass(`COUPONS 合法：${coupons.summary.couponCount} 张券，其中 ${coupons.summary.computable} 张能算出蛋白`);
+
     const priced = data.items.filter(i => i.price).length;
     if (priced === 0) fail('没有任何餐品带价格，成本优化会失效');
     else pass(`带真实价格的餐品 ${priced} 项`);
-  } catch (e) {
-    fail(`注入的 JSON 解析失败: ${e.message}`);
+
+    const bf = data.items.filter(i => i.category === 'breakfast');
+    const bfPriced = bf.filter(i => i.price);
+    pass(`早餐餐品 ${bf.length} 项（带价格 ${bfPriced.length} 项）`);
+
+    const withCalcium = data.items.filter(i => i.calcium > 0).length;
+    if (withCalcium === 0) fail('钙字段全为 0，钙负荷榜会失效');
+    else pass(`带钙数据的餐品 ${withCalcium} 项`);
+
+    const days = coupons.calendar.filter(d => d.entries.length).length;
+    if (days === 0) fail('券日历里没有任何可用日');
+    else pass(`券日历覆盖 ${days} 天`);
+
+    const unmatched = coupons.board.filter(r => r.gPerYuanLo === null);
+    if (unmatched.length && unmatched.some(r => !r.basis)) {
+      fail('有券标成「无法对齐」却没写明依据');
+    } else {
+      pass(`诚实标注：${unmatched.length} 张券标为无法对齐，且都写了依据`);
+    }
   }
+} catch (e) {
+  fail(`注入的 JSON 解析失败: ${e.message}`);
 }
 
 // 4. 关键结构
@@ -77,13 +117,27 @@ const REQUIRED_IDS = [
   'oRows', 'oTotals', 'oVs', 'rankDensity', 'rankValue',
   'qBody', 'scatter', 'curve', 'catBody', 'weekDays', 'weekSum',
   'orderSum', 'orderList', 'orderFoot', 'ordInsight',
+  'liveGrid', 'cpSum', 'cpCal', 'cpList', 'cpNote', 'cpRatio', 'cpInsight',
+  'bfSum', 'bfBody', 'bfNote', 'parTiers', 'parBody', 'parRatio', 'parDominated',
+  'shareCanvas', 'shareText', 'dlPng', 'copyText', 'qSeg',
 ];
 const missing = REQUIRED_IDS.filter(id => !html.includes(`id="${id}"`));
 if (missing.length) fail(`缺少节点: ${missing.join(', ')}`);
 else pass(`${REQUIRED_IDS.length} 个关键节点齐备`);
 
 const sections = (html.match(/<section/g) || []).length;
-pass(`内容分块 ${sections} 个`);
+if (sections < 13) fail(`板块数只有 ${sections}，预期至少 13`);
+else pass(`内容分块 ${sections} 个`);
+
+// 5. 本地模式的注入点必须存在，否则 serve.py 无法把页面切到实时模式
+console.log('\n5. 本地工具模式挂载点');
+if (html.includes('window.__LOCAL__')) pass('页面读取 window.__LOCAL__（serve.py 的注入点）');
+else fail('页面没有读取 window.__LOCAL__，本地模式会失效');
+if (html.includes("sessionStorage.getItem('mcmuscle.live')")) {
+  pass('支持用 sessionStorage 里的实时数据重新初始化');
+} else {
+  fail('缺少实时数据接管逻辑');
+}
 
 console.log('');
 if (failures) {

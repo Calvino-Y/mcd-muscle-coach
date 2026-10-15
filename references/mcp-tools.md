@@ -36,6 +36,33 @@ beType 与 orderType 的对应关系（官方约定）：
 | 2 | 麦乐送 | 2 | 必传 |
 | 6 | 企业团餐 | 2 | 必传 |
 
+### `query-my-coupons` / `query-store-coupons` / `available-coupons`
+
+```
+入参：query-my-coupons 无参（当前账号卡包资产）
+      query-store-coupons 传门店与订单类型参数
+      available-coupons  传订单上下文，返回该订单可用的券
+返回：券名 / couponId / 有效期与时段文本 / 优惠方式 / 门店与渠道范围
+```
+
+- 三者的语义差别：`query-my-coupons` 只回答「卡包里有什么」，**不校验门店与渠道可用性**；
+  `query-store-coupons` 才是「指定门店 + 订单类型下可用」；做券推荐时以后者为准
+- 有效期是中文省略文本（如「周一、二、三 10:30–23:59」），解析逻辑见
+  `scripts/build_coupons.py::parse_validity`
+- 券内餐品经常对不上营养表——`data/coupons.json` 逐券写 `confidence` 与 `basis`，
+  不要为了凑数拿相近餐品替换
+
+### `order-list`
+
+```
+入参：无（返回当前登录账号的近期订单）
+返回：orderId / createTime / storeCode / storeName / orderStatus /
+      realTotalAmount / orderProductList
+```
+
+- 只返回近期订单（当前快照 10 笔），不是全年账单，展示时要如实标注区间
+- 仓库快照已把 orderId 脱敏为 `ORD-0001` 形式
+
 ### `query-nearby-stores`
 
 ```
@@ -50,9 +77,9 @@ beType 与 orderType 的对应关系（官方约定）：
 ## 项目未用到、但同一 Server 提供的
 
 `delivery-query-addresses` `delivery-create-address` `delivery-query-stores`
-`query-meal-assistance` `query-store-coupons` `query-meal-detail`
-`cancel-order` `query-order` `order-list` `campaign-calendar`
-`available-coupons` `auto-bind-coupons` `query-my-coupons` `query-my-account`
+`query-meal-assistance` `query-meal-detail`
+`cancel-order` `query-order` `campaign-calendar`
+`auto-bind-coupons` `query-my-account`
 `mall-points-products` `mall-product-detail` `mall-create-order`
 `mall-order-list` `mall-order-detail` `now-time-info` `query-lottery-info`
 `draw-lottery` `query-my-prizes` `query-party-city` `query-party-store`

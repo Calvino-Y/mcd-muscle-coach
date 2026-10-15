@@ -113,14 +113,17 @@ def categorise(name: str) -> str:
     return "other"
 
 
-def parse_nutrition(path: pathlib.Path) -> list[dict]:
+def parse_nutrition_text(text: str) -> list[dict]:
     """解析「名称,描述,kJ,kcal,蛋白,脂肪,碳水,钠,钙」九列文本。
 
     注意：描述列不一定是 null，曼哈顿写法有「能量约鲈鱼1条」这类文案，
     所以不能靠 "null," 过滤，只能靠「后七列必须都是数字」来判定有效行。
+
+    接受字符串而非路径，是为了让本地工具模式 scripts/serve.py 能直接吃
+    MCP 的实时返回——同一份解析逻辑，不在两个地方各写一遍。
     """
     rows: list[dict] = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in text.splitlines():
         line = line.strip()
         if not line or line.startswith(("[", "{")):
             continue
@@ -144,19 +147,31 @@ def parse_nutrition(path: pathlib.Path) -> list[dict]:
     return rows
 
 
-def main() -> int:
-    rows = parse_nutrition(RAW)
-    if not rows:
-        raise SystemExit(f"未能从 {RAW} 解析出任何营养数据")
+def parse_nutrition(path: pathlib.Path) -> list[dict]:
+    return parse_nutrition_text(path.read_text(encoding="utf-8"))
 
-    price_by_name: dict[str, tuple[str, float]] = {}
+
+def price_table(live: dict[str, float] | None = None) -> dict[str, tuple[str, float]]:
+    """菜单名 / 别名 -> (餐品编码, 价格)。
+
+    ``live`` 是「餐品编码 -> 实时价格」，来自 query-meals。传入时会覆盖静态表里的
+    价格——本地工具模式就是靠这一点，换门店、换一天重新拉一次菜单即可拿到
+    当地当天的真实价格，不需要改代码。
+    """
+    table: dict[str, tuple[str, float]] = {}
     for code, (menu_name, price) in PRICES.items():
-        price_by_name[menu_name] = (code, price)
+        p = (live or {}).get(code, price)
+        table[menu_name] = (code, p)
         if menu_name in ALIASES:
-            price_by_name[ALIASES[menu_name]] = (code, price)
+            table[ALIASES[menu_name]] = (code, p)
+    return table
 
+
+def assemble(rows: list[dict], live: dict[str, float] | None = None) -> list[dict]:
+    """给营养行挂上 code / price / category，并计算全部派生指标。"""
+    table = price_table(live)
     for row in rows:
-        hit = price_by_name.get(row["name"])
+        hit = table.get(row["name"])
         row["code"] = hit[0] if hit else None
         row["price"] = hit[1] if hit else None
         row["category"] = categorise(row["name"])
@@ -170,17 +185,46 @@ def main() -> int:
         # 小杯美式是 1g 蛋白 / 10kcal，比值被人为放大到 10.0，属于数学噪声。
         # 只有「蛋白量本身有意义的餐品」才配进排行榜，否则排名会被饮料霸榜。
         row["proteinSource"] = protein >= MIN_PROTEIN_G and kcal >= 50
+    return rows
 
-    dataset = {
+
+def live_prices_from_meals(payload: dict) -> dict[str, float]:
+    """从 query-meals 的返回里抽出「餐品编码 -> 现价」。"""
+    out: dict[str, float] = {}
+    for code, meal in (payload.get("data", {}).get("meals") or {}).items():
+        price = meal.get("currentPrice")
+        if price in (None, ""):
+            continue
+        try:
+            out[code] = float(price)
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
+def build_payload(rows: list[dict], store: dict | None = None,
+                  captured_at: str = "", live: dict[str, float] | None = None) -> dict:
+    return {
         "source": {
             "nutritionTool": "list-nutrition-foods",
             "priceTool": "query-meals",
-            "store": STORE,
-            "capturedAt": "2026-10-15",
+            "store": store or STORE,
+            "capturedAt": captured_at,
+            "livePriced": bool(live),
             "totalItems": len(rows),
         },
         "items": rows,
     }
+
+
+def main() -> int:
+    rows = parse_nutrition(RAW)
+    if not rows:
+        raise SystemExit(f"未能从 {RAW} 解析出任何营养数据")
+
+    assemble(rows)
+    dataset = build_payload(rows, captured_at="2026-10-15")
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(dataset, ensure_ascii=False, indent=2), encoding="utf-8")
 

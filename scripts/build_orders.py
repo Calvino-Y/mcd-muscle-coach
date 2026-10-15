@@ -35,9 +35,10 @@ TIME_BUCKETS = [
 WEEKDAY_CN = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 
 
-def parse_nutrition() -> dict[str, dict]:
+def nutrition_table(text: str) -> dict[str, dict]:
+    """名称 -> 营养字段。接受字符串，便于本地工具模式直接吃实时返回。"""
     table: dict[str, dict] = {}
-    for line in NUTRITION.read_text(encoding="utf-8").splitlines():
+    for line in text.splitlines():
         line = line.strip()
         if not line or line.startswith(("[", "{")):
             continue
@@ -55,6 +56,10 @@ def parse_nutrition() -> dict[str, dict]:
     return table
 
 
+def parse_nutrition() -> dict[str, dict]:
+    return nutrition_table(NUTRITION.read_text(encoding="utf-8"))
+
+
 def bucket_of(hour: int) -> str:
     for name, lo, hi in TIME_BUCKETS:
         if lo <= hour < hi:
@@ -62,10 +67,12 @@ def bucket_of(hour: int) -> str:
     return "深夜"
 
 
-def main() -> int:
-    raw = json.loads(ORDERS.read_text(encoding="utf-8"))
+def build_order_set(raw: dict, nutrition: dict[str, dict]) -> dict:
+    """把订单原始返回 + 营养表，聚合成带逐单明细的体检数据集。
+
+    静态快照与本地工具模式调用的是同一个函数，保证两种模式下页面数字一致。
+    """
     orders = raw["orders"]
-    nutrition = parse_nutrition()
 
     rows: list[dict] = []
     matched_total = unmatched_total = 0
@@ -167,6 +174,12 @@ def main() -> int:
         },
         "orders": rows,
     }
+    return payload
+
+
+def main() -> int:
+    raw = json.loads(ORDERS.read_text(encoding="utf-8"))
+    payload = build_order_set(raw, parse_nutrition())
 
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -178,7 +191,7 @@ def main() -> int:
     print(f"  蛋白 ≥30 g 的订单：{s['proteinRichOrders']}/{s['orderCount']} 笔")
     print(f"  最常点：{s['topItem']} ×{s['topItemQty']}")
     print()
-    for r in rows:
+    for r in payload["orders"]:
         flag = "达标" if r["protein"] >= 30 else ("偏低" if r["protein"] < 20 else "及格")
         print(f"  #{r['seq']:<2} {r['date']} {r['weekday']} {r['bucket']:<4} "
               f"¥{r['amount']:>5.1f}  蛋白 {r['protein']:>5.1f}g  热量 {r['kcal']:>4}  "

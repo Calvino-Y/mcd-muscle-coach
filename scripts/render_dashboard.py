@@ -16,6 +16,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "assets" / "dashboard-template.html"
 DATASET = ROOT / "data" / "menu.json"
 ORDER_SET = ROOT / "data" / "orders.json"
+COUPON_SET = ROOT / "data" / "coupons.json"
 OUT = ROOT / "docs" / "index.html"
 
 KEEP = ("name", "code", "category", "energyKcal", "protein", "fat", "carbs",
@@ -34,8 +35,15 @@ def main() -> int:
     orders = json.loads(ORDER_SET.read_text(encoding="utf-8"))
     order_payload = json.dumps(orders, ensure_ascii=False, separators=(",", ":"))
 
+    if not COUPON_SET.exists():
+        raise SystemExit("缺少 data/coupons.json，请先运行： python scripts/build_coupons.py")
+    coupons = json.loads(COUPON_SET.read_text(encoding="utf-8"))
+    coupon_payload = json.dumps(coupons, ensure_ascii=False, separators=(",", ":"))
+
     html = TEMPLATE.read_text(encoding="utf-8")
-    for token, value in (("/*__DATA__*/", payload), ("/*__ORDERS__*/", order_payload)):
+    for token, value in (("/*__DATA__*/", payload),
+                         ("/*__ORDERS__*/", order_payload),
+                         ("/*__COUPONS__*/", coupon_payload)):
         if token not in html:
             raise SystemExit(f"模板里找不到 {token} 占位符")
         html = html.replace(token, value)
@@ -47,7 +55,8 @@ def main() -> int:
 
     size_kb = len(html.encode("utf-8")) / 1024
     print(f"已生成 {OUT.relative_to(ROOT)}（{len(slim['items'])} 项餐品 · "
-          f"{orders['summary']['orderCount']} 笔订单，{size_kb:.1f} KB）")
+          f"{orders['summary']['orderCount']} 笔订单 · "
+          f"{coupons['summary']['couponCount']} 张券，{size_kb:.1f} KB）")
     return 0
 
 

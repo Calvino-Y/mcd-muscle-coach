@@ -46,6 +46,19 @@
 - **返回**：门店列表，含 `storeCode` 与 `beCode`
 - **在本项目中的角色**：把用户说的「我在 XX 附近」翻译成 `storeCode`，供 `query-meals` 使用
 
+### `query-my-coupons` / `query-store-coupons` — 卡包券与门店券（「限时券 × 蛋白效率」板块）
+
+- **输入**：`query-my-coupons` 无参数（当前账号卡包）；`query-store-coupons` 传门店参数
+- **返回**：券名 / 券 ID / 有效期与时段文本 / 优惠方式 / 门店范围
+- **在本项目中的角色**：把券从「省几块钱」翻译成「每克蛋白多少钱」。
+  中薯条买一送一算下来 **0.59 g/元**；火腿扒堡早餐两件套把每克蛋白压到 **¥0.47–0.71**，
+  低于菜单原价冠军（那么大鸡排 ¥0.58/克）——这是不用券的数据根本看不出来的结论。
+- **解析器**：`scripts/build_coupons.py`（有效期文本解析见 `parse_validity`，
+  能对齐「周一、二、三」这类中文省略写法）
+- **诚实口径**：`data/coupons.json` 里每张券都带 `confidence`（deterministic / range /
+  partial / unmatched）与 `basis` 字段。8 张券里 3 张在营养表里没有对应条目，标为
+  unmatched 并写明原因；配餐有浮动的给区间。**不拿相近餐品凑数。**
+
 ### `order-list` — 历史订单（「你的真实订单体检」板块）
 
 - **输入**：无参数（返回当前登录账号的近期订单）
@@ -90,10 +103,46 @@ build_orders.py           逐单拆套餐 -> 子项，按名称对齐营养表�
         │                 输出每单蛋白/热量/钠 与 营养覆盖率
         ▼
 data/orders.json  ──▶  注入同一个面板，「你的真实订单体检」板块
+
+query-my-coupons / query-store-coupons
+        │  得到卡包券 + 门店券（名称 / 时段 / 优惠方式）
+        ▼
+build_coupons.py          逐券对齐营养表，置信度分级（deterministic /
+        │                 range / partial / unmatched），聚合一周券日历
+        ▼
+data/coupons.json ──▶  注入同一个面板，「限时券 × 蛋白效率」板块
 ```
 
-两条链路在面板里汇合：`menu.json` 回答「该怎么点」，`orders.json` 回答「你实际点了什么」，
-两者用同一个求解器对比——「你平均每单花 ¥24.6 确认到 7.5 g 蛋白，同样的钱算法能买到 28 g」。
+三条链路在面板里汇合：`menu.json` 回答「该怎么点」，`orders.json` 回答「你实际点了什么」，
+`coupons.json` 回答「券能不能让这个答案更便宜」——三者用同一个求解器对比：
+「你平均每单花 ¥24.6 确认到 7.5 g 蛋白，同样的钱算法能买到 28 g；而一张 ¥9.9 的早餐券
+能把每克蛋白压到 ¥0.47」。
+
+## 3.5 本地工具模式（`scripts/serve.py`）
+
+静态面板的数据是构建时的快照。要让**每个用户跑自己的数据**，本项目提供一个零依赖的
+本地代理服务：
+
+```
+浏览器(http://127.0.0.1:8765)
+      │  页面上填 Token，点连接
+      ▼
+serve.py（本机进程，只绑 127.0.0.1）
+      │  代理 MCP 调用：query-meals / order-list / query-my-coupons ...
+      ▼
+https://mcp.mcd.cn（Token 只存在于本机内存）
+```
+
+**为什么必须有这一层**：实测 `https://mcp.mcd.cn` 的响应**不带 CORS 头**
+（`OPTIONS`/`POST` 均返回 403 且无 `Access-Control-Allow-Origin`），浏览器无法直连。
+这恰好是正确的设计——Token 不该交给浏览器保管。serve.py 因此承担了双重职责：
+替浏览器调 MCP，以及**不把 Token 泄漏给任何人**：
+
+- 只绑定 `127.0.0.1`；校验 `Host` 头（防 DNS rebinding）；拒绝跨站 `Origin`
+- 每次启动生成随机会话密钥，`/api/*` 必须携带 `X-McMuscle-Key` → 否则 401
+- Token 只存内存，不落盘、不回显；页面注入前做 Token 形态泄漏扫描
+- 求解器**不下放**到服务端：页面继续用自己那份 JS 求解器（单一权威），服务端只供数据
+- 端到端验证：`python tests/test_serve.py`（安全闸门 13 项 + 降级行为）
 
 ## 4. 数据字段说明（`data/menu.json`）
 
@@ -108,20 +157,44 @@ data/orders.json  ──▶  注入同一个面板，「你的真实订单体检
 | `proteinSource` | bool | 蛋白 ≥ 8g 且热量 ≥ 50kcal。用于过滤「1g 蛋白/10kcal」这类数学噪声 |
 | `category` | str | breakfast / burger / chicken / side / dessert / drink / combo / other |
 
+## 4.5 数据字段说明（`data/coupons.json`）
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `source` | obj | 快照元信息：采样时间 / 门店 / 使用到的 MCP 工具 |
+| `summary` | obj | 聚合结论：券总数 / 可算数 / 无法对齐数 / 早餐可用数 / 最优券与其 g/元区间 |
+| `board[].title` | str | 券名（原样来自 MCP 返回） |
+| `board[].couponPrice` | float | 券价（元） |
+| `board[].weekdays[]` / `timeFrom` / `timeTo` | list/str | 由有效期文本解析出的可用星期与时段 |
+| `board[].confidence` | str | deterministic（单值可算）/ range（区间）/ partial（部分可算）/ unmatched（无法对齐） |
+| `board[].basis` | str | 该结论的推算依据（对齐到哪个营养条目、为什么是区间） |
+| `board[].proteinLo` / `proteinHi` | float | 券内餐品的蛋白区间 |
+| `board[].gPerYuanLo` / `gPerYuanHi` | float | 券后 g/元 区间（unmatched 时为 null） |
+| `board[].candidates[]` | list | 参与推算的营养条目明细（可追溯） |
+| `calendar[]` | list | 按星期聚合的一周券日历：`weekday` + `entries[]`（券 / 价格 / 时段 / 置信度） |
+| `claimable` | list | 当前可领但未领的门店券（MCP 原样字段） |
+
 ## 5. 业务价值
 
 **把麦当劳从「增肌禁忌」变成「可计算的蛋白质补给站」。**
 
 - 对健身人群：给出可执行的「今天还差多少克、这一顿点什么」，而不是一句「少吃油炸」。
 - 对麦当劳：把营养数据的透明度变成复购理由——用户越容易算清楚，越敢在减脂期下单。
-- 对 MCP 生态：示范了「营养数据 + 实时价格 + 历史订单」三条 Tool 链路怎么对齐成一个
-  可优化的决策问题，并用同一套求解器做「理想 vs 现实」的对照。这是单纯查询类 Skill 做不到的。
+  券链路还额外回答了「券怎么和营养目标配合」：¥9.9 的早餐两件套能把每克蛋白压到
+  ¥0.47，比菜单上任何原价单品都低——这是把优惠券从「促销工具」变成「营养工具」。
+- 对 MCP 生态：示范了「营养数据 + 实时价格 + 历史订单 + 卡包券」四条 Tool 链路怎么
+  对齐成一个可优化的决策问题，并用同一套求解器做「理想 vs 现实」的对照；
+  `serve.py` 进一步示范了「CORS 不放行时，怎么安全地让每个用户跑自己的数据」。
+  这是单纯查询类 Skill 做不到的。
 
 ## 6. 可复现性与验证
 
 - `data/nutrition_raw.txt` 是 `list-nutrition-foods` 的**原始响应快照**，任何人重跑同一 Tool 都应得到一致数据。
+- `data/coupons_raw.json` 是 `query-my-coupons` / `query-store-coupons` / `available-coupons`
+  的原始快照，`data/coupons.json` 由 `scripts/build_coupons.py` 生成，每条结论可追溯。
 - `data/menu.json` 由 `scripts/build_dataset.py` 从快照生成，构建过程无人工干预。
 - 前端求解器与 Python 求解器的一致性由 `tests/test_solver_parity.mjs` 保证（12 个场景逐字段对拍）。
+- `serve.py` 的安全闸门由 `tests/test_serve.py` 端到端验证（Host/Origin/密钥/Token 泄漏/降级）。
 
 ```bash
 python scripts/export_parity_fixture.py && node tests/test_solver_parity.mjs

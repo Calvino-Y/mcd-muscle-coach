@@ -1,0 +1,568 @@
+{
+ "source": {
+  "capturedAt": "2026-10-15T16:09:29",
+  "storeCode": "3450032",
+  "storeName": "麦当劳成都万达餐厅",
+  "tools": [
+   "query-my-coupons",
+   "query-store-coupons",
+   "available-coupons"
+  ],
+  "note": "麦当劳 MCP 返回的优惠券原始快照，字段与官方返回一致。query-my-coupons 只返回卡包资产，不校验门店/渠道可用性；query-store-coupons 才是「指定门店 + 订单类型」下可用的券。",
+  "nutritionTool": "list-nutrition-foods"
+ },
+ "board": [
+  {
+   "title": "中薯条买一送一",
+   "couponPrice": 13.5,
+   "weekdays": [
+    "周一",
+    "周二",
+    "周三",
+    "周四",
+    "周五"
+   ],
+   "timeFrom": "10:30",
+   "timeTo": "23:59",
+   "dateFrom": "2026-10-12",
+   "dateTo": "2026-10-16",
+   "channels": [
+    "到店专用",
+    "外送专用"
+   ],
+   "confidence": "deterministic",
+   "basis": "券名本身就是「买一送一」，对应菜单里的中薯条 ×2，成分没有歧义。",
+   "candidates": [
+    {
+     "items": [
+      {
+       "name": "中薯条",
+       "protein": 4.0,
+       "energyKcal": 289.0
+      },
+      {
+       "name": "中薯条",
+       "protein": 4.0,
+       "energyKcal": 289.0
+      }
+     ],
+     "protein": 8.0,
+     "energyKcal": 578,
+     "fat": 24.0,
+     "sodium": 330
+    }
+   ],
+   "proteinLo": 8.0,
+   "proteinHi": 8.0,
+   "kcalLo": 578,
+   "kcalHi": 578,
+   "gPerYuanLo": 0.59,
+   "gPerYuanHi": 0.59,
+   "kcalPer100gProteinLo": 7225,
+   "confidenceLabel": "可确定"
+  },
+  {
+   "title": "王牌小食拼",
+   "couponPrice": 15.9,
+   "weekdays": [
+    "周一",
+    "周二",
+    "周三",
+    "周四",
+    "周五"
+   ],
+   "timeFrom": "10:30",
+   "timeTo": "23:59",
+   "dateFrom": "2026-10-12",
+   "dateTo": "2026-10-16",
+   "channels": [
+    "到店专用",
+    "外送专用"
+   ],
+   "confidence": "unmatched",
+   "basis": "券面没有标注这个拼盘包含哪几件餐品，无法逐件对齐官方营养表。不猜。",
+   "candidates": [],
+   "proteinLo": null,
+   "proteinHi": null,
+   "kcalLo": null,
+   "kcalHi": null,
+   "gPerYuanLo": null,
+   "gPerYuanHi": null,
+   "kcalPer100gProteinLo": null,
+   "confidenceLabel": "无法对齐"
+  },
+  {
+   "title": "火腿扒堡早餐两件套",
+   "couponPrice": 9.9,
+   "weekdays": [
+    "周五"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-16",
+   "dateTo": "2026-10-16",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "range",
+   "basis": "官方营养表里与「火腿扒堡」对应的条目有两个（火腿扒麦满分 / 双层火腿扒麦满分），券面没有指明是哪一种，因此只能给区间。",
+   "candidates": [
+    {
+     "items": [
+      {
+       "name": "火腿扒麦满分",
+       "protein": 14.0,
+       "energyKcal": 261.0
+      }
+     ],
+     "protein": 14.0,
+     "energyKcal": 261,
+     "fat": 12.0,
+     "sodium": 608
+    },
+    {
+     "items": [
+      {
+       "name": "双层火腿扒麦满分",
+       "protein": 21.0,
+       "energyKcal": 385.0
+      }
+     ],
+     "protein": 21.0,
+     "energyKcal": 385,
+     "fat": 22.0,
+     "sodium": 979
+    }
+   ],
+   "proteinLo": 14.0,
+   "proteinHi": 21.0,
+   "kcalLo": 261,
+   "kcalHi": 385,
+   "gPerYuanLo": 1.41,
+   "gPerYuanHi": 2.12,
+   "kcalPer100gProteinLo": 1243,
+   "confidenceLabel": "区间"
+  },
+  {
+   "title": "巧克力味厚松饼猪柳蛋套餐",
+   "couponPrice": 29.9,
+   "weekdays": [
+    "周六"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-17",
+   "dateTo": "2026-10-17",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "partial",
+   "basis": "套餐里的猪柳蛋能对齐营养表的「猪柳蛋麦满分」，但「巧克力味厚松饼」在营养表里没有条目，所以这个数字是套餐蛋白质的下界。",
+   "candidates": [
+    {
+     "items": [
+      {
+       "name": "猪柳蛋麦满分",
+       "protein": 23.0,
+       "energyKcal": 387.0
+      }
+     ],
+     "protein": 23.0,
+     "energyKcal": 387,
+     "fat": 21.0,
+     "sodium": 846
+    }
+   ],
+   "proteinLo": 23.0,
+   "proteinHi": 23.0,
+   "kcalLo": 387,
+   "kcalHi": 387,
+   "gPerYuanLo": 0.77,
+   "gPerYuanHi": 0.77,
+   "kcalPer100gProteinLo": 1683,
+   "confidenceLabel": "下界"
+  },
+  {
+   "title": "巧克力味厚松饼猪柳蛋套餐",
+   "couponPrice": 29.9,
+   "weekdays": [
+    "周日"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-18",
+   "dateTo": "2026-10-18",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "partial",
+   "basis": "套餐里的猪柳蛋能对齐营养表的「猪柳蛋麦满分」，但「巧克力味厚松饼」在营养表里没有条目，所以这个数字是套餐蛋白质的下界。",
+   "candidates": [
+    {
+     "items": [
+      {
+       "name": "猪柳蛋麦满分",
+       "protein": 23.0,
+       "energyKcal": 387.0
+      }
+     ],
+     "protein": 23.0,
+     "energyKcal": 387,
+     "fat": 21.0,
+     "sodium": 846
+    }
+   ],
+   "proteinLo": 23.0,
+   "proteinHi": 23.0,
+   "kcalLo": 387,
+   "kcalHi": 387,
+   "gPerYuanLo": 0.77,
+   "gPerYuanHi": 0.77,
+   "kcalPer100gProteinLo": 1683,
+   "confidenceLabel": "下界"
+  },
+  {
+   "title": "火腿扒堡早餐两件套",
+   "couponPrice": 9.9,
+   "weekdays": [
+    "周一"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-19",
+   "dateTo": "2026-10-19",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "range",
+   "basis": "官方营养表里与「火腿扒堡」对应的条目有两个（火腿扒麦满分 / 双层火腿扒麦满分），券面没有指明是哪一种，因此只能给区间。",
+   "candidates": [
+    {
+     "items": [
+      {
+       "name": "火腿扒麦满分",
+       "protein": 14.0,
+       "energyKcal": 261.0
+      }
+     ],
+     "protein": 14.0,
+     "energyKcal": 261,
+     "fat": 12.0,
+     "sodium": 608
+    },
+    {
+     "items": [
+      {
+       "name": "双层火腿扒麦满分",
+       "protein": 21.0,
+       "energyKcal": 385.0
+      }
+     ],
+     "protein": 21.0,
+     "energyKcal": 385,
+     "fat": 22.0,
+     "sodium": 979
+    }
+   ],
+   "proteinLo": 14.0,
+   "proteinHi": 21.0,
+   "kcalLo": 261,
+   "kcalHi": 385,
+   "gPerYuanLo": 1.41,
+   "gPerYuanHi": 2.12,
+   "kcalPer100gProteinLo": 1243,
+   "confidenceLabel": "区间"
+  },
+  {
+   "title": "芝香脆鸡扒堡早餐两件套",
+   "couponPrice": 9.9,
+   "weekdays": [
+    "周二"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-20",
+   "dateTo": "2026-10-20",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "unmatched",
+   "basis": "官方营养表里没有「芝香脆鸡扒堡」这个条目，不做近似替换。",
+   "candidates": [],
+   "proteinLo": null,
+   "proteinHi": null,
+   "kcalLo": null,
+   "kcalHi": null,
+   "gPerYuanLo": null,
+   "gPerYuanHi": null,
+   "kcalPer100gProteinLo": null,
+   "confidenceLabel": "无法对齐"
+  },
+  {
+   "title": "高达芝士蛋堡早餐两件套",
+   "couponPrice": 9.9,
+   "weekdays": [
+    "周三"
+   ],
+   "timeFrom": "05:00",
+   "timeTo": "10:29",
+   "dateFrom": "2026-10-21",
+   "dateTo": "2026-10-21",
+   "channels": [
+    "到店专用"
+   ],
+   "confidence": "unmatched",
+   "basis": "官方营养表里没有「高达芝士蛋堡」这个条目，不做近似替换。",
+   "candidates": [],
+   "proteinLo": null,
+   "proteinHi": null,
+   "kcalLo": null,
+   "kcalHi": null,
+   "gPerYuanLo": null,
+   "gPerYuanHi": null,
+   "kcalPer100gProteinLo": null,
+   "confidenceLabel": "无法对齐"
+  }
+ ],
+ "calendar": [
+  {
+   "weekday": "周一",
+   "entries": [
+    {
+     "title": "火腿扒堡早餐两件套",
+     "couponPrice": 9.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": 1.41,
+     "gPerYuanHi": 2.12,
+     "confidence": "range",
+     "confidenceLabel": "区间",
+     "dateFrom": "2026-10-19"
+    },
+    {
+     "title": "中薯条买一送一",
+     "couponPrice": 13.5,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": 0.59,
+     "gPerYuanHi": 0.59,
+     "confidence": "deterministic",
+     "confidenceLabel": "可确定",
+     "dateFrom": "2026-10-12"
+    },
+    {
+     "title": "王牌小食拼",
+     "couponPrice": 15.9,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-12"
+    }
+   ]
+  },
+  {
+   "weekday": "周二",
+   "entries": [
+    {
+     "title": "芝香脆鸡扒堡早餐两件套",
+     "couponPrice": 9.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-20"
+    },
+    {
+     "title": "中薯条买一送一",
+     "couponPrice": 13.5,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": 0.59,
+     "gPerYuanHi": 0.59,
+     "confidence": "deterministic",
+     "confidenceLabel": "可确定",
+     "dateFrom": "2026-10-12"
+    },
+    {
+     "title": "王牌小食拼",
+     "couponPrice": 15.9,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-12"
+    }
+   ]
+  },
+  {
+   "weekday": "周三",
+   "entries": [
+    {
+     "title": "高达芝士蛋堡早餐两件套",
+     "couponPrice": 9.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-21"
+    },
+    {
+     "title": "中薯条买一送一",
+     "couponPrice": 13.5,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": 0.59,
+     "gPerYuanHi": 0.59,
+     "confidence": "deterministic",
+     "confidenceLabel": "可确定",
+     "dateFrom": "2026-10-12"
+    },
+    {
+     "title": "王牌小食拼",
+     "couponPrice": 15.9,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-12"
+    }
+   ]
+  },
+  {
+   "weekday": "周四",
+   "entries": [
+    {
+     "title": "中薯条买一送一",
+     "couponPrice": 13.5,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": 0.59,
+     "gPerYuanHi": 0.59,
+     "confidence": "deterministic",
+     "confidenceLabel": "可确定",
+     "dateFrom": "2026-10-12"
+    },
+    {
+     "title": "王牌小食拼",
+     "couponPrice": 15.9,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-12"
+    }
+   ]
+  },
+  {
+   "weekday": "周五",
+   "entries": [
+    {
+     "title": "火腿扒堡早餐两件套",
+     "couponPrice": 9.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": 1.41,
+     "gPerYuanHi": 2.12,
+     "confidence": "range",
+     "confidenceLabel": "区间",
+     "dateFrom": "2026-10-16"
+    },
+    {
+     "title": "中薯条买一送一",
+     "couponPrice": 13.5,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": 0.59,
+     "gPerYuanHi": 0.59,
+     "confidence": "deterministic",
+     "confidenceLabel": "可确定",
+     "dateFrom": "2026-10-12"
+    },
+    {
+     "title": "王牌小食拼",
+     "couponPrice": 15.9,
+     "timeFrom": "10:30",
+     "timeTo": "23:59",
+     "gPerYuanLo": null,
+     "gPerYuanHi": null,
+     "confidence": "unmatched",
+     "confidenceLabel": "无法对齐",
+     "dateFrom": "2026-10-12"
+    }
+   ]
+  },
+  {
+   "weekday": "周六",
+   "entries": [
+    {
+     "title": "巧克力味厚松饼猪柳蛋套餐",
+     "couponPrice": 29.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": 0.77,
+     "gPerYuanHi": 0.77,
+     "confidence": "partial",
+     "confidenceLabel": "下界",
+     "dateFrom": "2026-10-17"
+    }
+   ]
+  },
+  {
+   "weekday": "周日",
+   "entries": [
+    {
+     "title": "巧克力味厚松饼猪柳蛋套餐",
+     "couponPrice": 29.9,
+     "timeFrom": "05:00",
+     "timeTo": "10:29",
+     "gPerYuanLo": 0.77,
+     "gPerYuanHi": 0.77,
+     "confidence": "partial",
+     "confidenceLabel": "下界",
+     "dateFrom": "2026-10-18"
+    }
+   ]
+  }
+ ],
+ "claimable": [
+  {
+   "title": "免费脆薯饼",
+   "status": "可领取"
+  },
+  {
+   "title": "人气麦旋风买一送一",
+   "status": "可领取"
+  },
+  {
+   "title": "9.9元中杯冰美式",
+   "status": "可领取"
+  }
+ ],
+ "summary": {
+  "couponCount": 8,
+  "computable": 5,
+  "unmatched": 3,
+  "breakfastCount": 8,
+  "daysWithCoupon": 7,
+  "daysWithBreakfastCoupon": 7,
+  "claimableCount": 3,
+  "bestCouponTitle": "火腿扒堡早餐两件套",
+  "bestCouponGPerYuanHi": 2.12,
+  "bestCouponGPerYuanLo": 1.41,
+  "menuBestName": "那么大鸡排",
+  "menuBestGPerYuan": 1.71
+ }
+}

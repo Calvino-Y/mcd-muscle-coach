@@ -1,0 +1,122 @@
+{
+  "source": {
+    "capturedAt": "2026-10-15T16:09:29",
+    "storeCode": "3450032",
+    "storeName": "麦当劳成都万达餐厅",
+    "tools": ["query-my-coupons", "query-store-coupons", "available-coupons"],
+    "note": "麦当劳 MCP 返回的优惠券原始快照，字段与官方返回一致。query-my-coupons 只返回卡包资产，不校验门店/渠道可用性；query-store-coupons 才是「指定门店 + 订单类型」下可用的券。"
+  },
+  "myCoupons": [
+    {
+      "title": "中薯条买一送一",
+      "couponPrice": 13.5,
+      "validText": "2026-10-12 10:30-2026-10-16 23:59 周一、二、三、四、五 10:30-23:59",
+      "dateFrom": "2026-10-12",
+      "dateTo": "2026-10-16",
+      "weekdays": ["周一", "周二", "周三", "周四", "周五"],
+      "timeFrom": "10:30",
+      "timeTo": "23:59",
+      "channels": ["到店专用", "外送专用"]
+    },
+    {
+      "title": "王牌小食拼",
+      "couponPrice": 15.9,
+      "validText": "2026-10-12 10:30-2026-10-16 23:59 周一、二、三、四、五 10:30-23:59",
+      "dateFrom": "2026-10-12",
+      "dateTo": "2026-10-16",
+      "weekdays": ["周一", "周二", "周三", "周四", "周五"],
+      "timeFrom": "10:30",
+      "timeTo": "23:59",
+      "channels": ["到店专用", "外送专用"]
+    },
+    {
+      "title": "火腿扒堡早餐两件套",
+      "couponPrice": 9.9,
+      "validText": "2026-10-16 05:00-2026-10-16 10:29 周五 05:00-10:29",
+      "dateFrom": "2026-10-16",
+      "dateTo": "2026-10-16",
+      "weekdays": ["周五"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    },
+    {
+      "title": "巧克力味厚松饼猪柳蛋套餐",
+      "couponPrice": 29.9,
+      "validText": "2026-10-17 05:00-2026-10-17 10:29 周六 05:00-10:29",
+      "dateFrom": "2026-10-17",
+      "dateTo": "2026-10-17",
+      "weekdays": ["周六"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    },
+    {
+      "title": "巧克力味厚松饼猪柳蛋套餐",
+      "couponPrice": 29.9,
+      "validText": "2026-10-18 05:00-2026-10-18 10:29 周日 05:00-10:29",
+      "dateFrom": "2026-10-18",
+      "dateTo": "2026-10-18",
+      "weekdays": ["周日"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    },
+    {
+      "title": "火腿扒堡早餐两件套",
+      "couponPrice": 9.9,
+      "validText": "2026-10-19 05:00-2026-10-19 10:29 周一 05:00-10:29",
+      "dateFrom": "2026-10-19",
+      "dateTo": "2026-10-19",
+      "weekdays": ["周一"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    },
+    {
+      "title": "芝香脆鸡扒堡早餐两件套",
+      "couponPrice": 9.9,
+      "validText": "2026-10-20 05:00-2026-10-20 10:29 周二 05:00-10:29",
+      "dateFrom": "2026-10-20",
+      "dateTo": "2026-10-20",
+      "weekdays": ["周二"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    },
+    {
+      "title": "高达芝士蛋堡早餐两件套",
+      "couponPrice": 9.9,
+      "validText": "2026-10-21 05:00-2026-10-21 10:29 周三 05:00-10:29",
+      "dateFrom": "2026-10-21",
+      "dateTo": "2026-10-21",
+      "weekdays": ["周三"],
+      "timeFrom": "05:00",
+      "timeTo": "10:29",
+      "channels": ["到店专用"]
+    }
+  ],
+  "storeCoupons": [
+    {
+      "title": "中薯条买一送一",
+      "couponId": "8692944B045928451618BFF22F535D2A",
+      "couponCode": "MCD69U000001Z09118AW4",
+      "tradeDateTime": "2026-10-12 10:30:00-2026-10-16 23:59:59",
+      "productCode": "9900012387",
+      "productName": "中薯条买一送一"
+    },
+    {
+      "title": "王牌小食拼",
+      "couponId": "E05F6BFB4BAFAA5DB44B233583BFE711",
+      "couponCode": "MCD601982VZ9A501001U9",
+      "tradeDateTime": "2026-10-12 10:30:00-2026-10-16 23:59:59",
+      "productCode": "9900016371",
+      "productName": "王牌小食拼"
+    }
+  ],
+  "claimable": [
+    { "title": "免费脆薯饼", "status": "可领取" },
+    { "title": "人气麦旋风买一送一", "status": "可领取" },
+    { "title": "9.9元中杯冰美式", "status": "可领取" }
+  ]
+}
