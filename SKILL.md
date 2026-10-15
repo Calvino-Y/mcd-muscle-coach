@@ -24,6 +24,8 @@ license: MIT
 - 「增肌期能吃麦当劳吗，会不会白练？」
 - 「麦当劳哪个汉堡蛋白最高、热量最低？」
 - 「我想增肌，练后想吃够蛋白」
+- 「30 块钱在麦当劳最多能买到多少蛋白？」
+- 「我在麦当劳都吃了什么？那些单子蛋白够吗？」
 
 ## 核心概念
 
@@ -48,6 +50,14 @@ license: MIT
 
 ```bash
 python scripts/build_dataset.py     # 解析营养数据 + 合并价格 -> data/menu.json
+python scripts/build_orders.py      # 可选：历史订单 + 营养对齐 -> data/orders.json
+```
+
+`build_orders.py` 需要 `data/orders_raw.json`（`order-list` 的原始返回，orderId 已脱敏）。
+需要拉取用户自己的订单时：
+
+```bash
+python scripts/mcd_client.py call order-list > data/orders_raw.json
 ```
 
 需要刷新实时价格时，先用 MCP 客户端拉取：
@@ -86,7 +96,11 @@ python scripts/coach.py --weight 72 --factor 1.8 --consumed 40 --json
 
 ```bash
 python scripts/render_dashboard.py   # -> docs/index.html
+node tests/check_page.mjs            # 生成后务必自检一次
 ```
+
+面板包含八块：缺口/预算双模式求解器（含预算边际收益曲线）、真实订单体检、双排行榜、
+蛋白质量榜（钠/脂肪负荷）、蛋白×热量散点图、点法对比表、品类战力榜、一周补给计划。
 
 ## 必须遵守的约束
 
@@ -108,6 +122,14 @@ python scripts/render_dashboard.py   # -> docs/index.html
 - **同名餐品营养值不同**：`麦乐鸡5块` 与 `麦乐鸡4块`、`中薯条` 与 `大薯条`
   都是独立条目，别混用。
 - **价格是门店级的**：换门店后必须重新调用 `query-meals`。
+- **订单里的餐品经常对不上营养表**：用户实际点的东西（套餐、新品、限定款）很多不在
+  `list-nutrition-foods` 里。当前快照覆盖率只有 55%。未匹配的一律计 0 并标注覆盖率，
+  绝不拿相近餐品估算填充——否则「订单体检」会变成编故事。
+- **改了面板模板必须跑两类检查**：`node tests/check_page.mjs` 抓占位符/语法/结构问题，
+  浏览器端渲染检查抓「语法正确但执行即抛错」的问题（本项目踩过：脚本顶层
+  `const top` 与 `window.top` 冲突，整段脚本静默失效，页面全空但控制台无报错）。
+- **Windows 下 `write_text` 会把 `\n` 写成 `\r\n`**：生成 HTML 时务必传 `newline="\n"`，
+  否则同一份模板在不同平台产出字节不一致，下游按 `\n` 写的正则会失配。
 
 ## 参考
 

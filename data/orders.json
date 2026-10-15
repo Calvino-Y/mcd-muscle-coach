@@ -1,0 +1,491 @@
+{
+  "source": {
+    "tool": "order-list",
+    "capturedAt": "2026-10-15T14:42:33",
+    "note": "麦当劳 MCP 返回的近期历史订单快照，字段与官方返回一致，未做任何修改",
+    "nutritionTool": "list-nutrition-foods",
+    "orderTool": "order-list",
+    "orderCount": 10
+  },
+  "period": {
+    "first": "2026-07-21",
+    "last": "2026-10-08"
+  },
+  "summary": {
+    "orderCount": 10,
+    "totalSpend": 246.0,
+    "avgPerOrder": 24.6,
+    "totalProtein": 75.0,
+    "totalKcal": 4624,
+    "avgProteinPerOrder": 7.5,
+    "avgKcalPerOrder": 462,
+    "costPerProtein": 3.28,
+    "proteinRichOrders": 1,
+    "itemCount": 33,
+    "matchedQty": 18,
+    "unmatchedQty": 15,
+    "coverage": 55,
+    "bestOrderSeq": 1,
+    "bestOrderProtein": 41.0,
+    "topItem": "培根芝士双牛堡",
+    "topItemQty": 7
+  },
+  "orders": [
+    {
+      "seq": 10,
+      "orderId": "ORD-0010",
+      "date": "2026-07-21",
+      "time": "11:55",
+      "weekday": "周二",
+      "hour": 11,
+      "bucket": "午餐",
+      "store": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "amount": 23.9,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "中薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 4.0,
+          "kcal": 289,
+          "sodium": 165
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 4.0,
+      "kcal": 436,
+      "fat": 12.0,
+      "sodium": 165,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 9,
+      "orderId": "ORD-0009",
+      "date": "2026-08-05",
+      "time": "21:11",
+      "weekday": "周三",
+      "hour": 21,
+      "bucket": "夜宵",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 27.9,
+      "items": [
+        {
+          "name": "麦辣大四角",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "日式鲜磨山葵酱",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "柠檬脆脆麦旋风",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        }
+      ],
+      "protein": 0.0,
+      "kcal": 0,
+      "fat": 0.0,
+      "sodium": 0,
+      "matchedQty": 0,
+      "unmatchedQty": 3,
+      "coverage": 0
+    },
+    {
+      "seq": 8,
+      "orderId": "ORD-0008",
+      "date": "2026-09-08",
+      "time": "20:00",
+      "weekday": "周二",
+      "hour": 20,
+      "bucket": "晚餐",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 29.4,
+      "items": [
+        {
+          "name": "韩式甜辣酱鸡块",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "日式鲜磨山葵酱",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "脆皮鸡柳",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "日式鲜磨山葵酱",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        }
+      ],
+      "protein": 0.0,
+      "kcal": 0,
+      "fat": 0.0,
+      "sodium": 0,
+      "matchedQty": 0,
+      "unmatchedQty": 4,
+      "coverage": 0
+    },
+    {
+      "seq": 7,
+      "orderId": "ORD-0007",
+      "date": "2026-09-19",
+      "time": "20:12",
+      "weekday": "周六",
+      "hour": 20,
+      "bucket": "晚餐",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 26.4,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "大薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 6.0,
+          "kcal": 379,
+          "sodium": 216
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 6.0,
+      "kcal": 526,
+      "fat": 16.0,
+      "sodium": 216,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 6,
+      "orderId": "ORD-0006",
+      "date": "2026-09-20",
+      "time": "11:45",
+      "weekday": "周日",
+      "hour": 11,
+      "bucket": "午餐",
+      "store": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "amount": 23.9,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "中薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 4.0,
+          "kcal": 289,
+          "sodium": 165
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 4.0,
+      "kcal": 436,
+      "fat": 12.0,
+      "sodium": 165,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 5,
+      "orderId": "ORD-0005",
+      "date": "2026-09-20",
+      "time": "19:43",
+      "weekday": "周日",
+      "hour": 19,
+      "bucket": "晚餐",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 26.4,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "大薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 6.0,
+          "kcal": 379,
+          "sodium": 216
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 6.0,
+      "kcal": 526,
+      "fat": 16.0,
+      "sodium": 216,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 4,
+      "orderId": "ORD-0004",
+      "date": "2026-09-23",
+      "time": "11:45",
+      "weekday": "周三",
+      "hour": 11,
+      "bucket": "午餐",
+      "store": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "amount": 23.9,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "中薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 4.0,
+          "kcal": 289,
+          "sodium": 165
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 4.0,
+      "kcal": 436,
+      "fat": 12.0,
+      "sodium": 165,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 3,
+      "orderId": "ORD-0003",
+      "date": "2026-09-24",
+      "time": "11:45",
+      "weekday": "周四",
+      "hour": 11,
+      "bucket": "午餐",
+      "store": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "amount": 25.4,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "大薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 6.0,
+          "kcal": 379,
+          "sodium": 216
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 6.0,
+      "kcal": 526,
+      "fat": 16.0,
+      "sodium": 216,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 2,
+      "orderId": "ORD-0002",
+      "date": "2026-10-07",
+      "time": "13:24",
+      "weekday": "周三",
+      "hour": 13,
+      "bucket": "午餐",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 23.9,
+      "items": [
+        {
+          "name": "培根芝士双牛堡",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        },
+        {
+          "name": "中薯条",
+          "qty": 1,
+          "matched": true,
+          "protein": 4.0,
+          "kcal": 289,
+          "sodium": 165
+        },
+        {
+          "name": "可乐中杯",
+          "qty": 1,
+          "matched": true,
+          "protein": 0.0,
+          "kcal": 147,
+          "sodium": 0
+        }
+      ],
+      "protein": 4.0,
+      "kcal": 436,
+      "fat": 12.0,
+      "sodium": 165,
+      "matchedQty": 2,
+      "unmatchedQty": 1,
+      "coverage": 67
+    },
+    {
+      "seq": 1,
+      "orderId": "ORD-0001",
+      "date": "2026-10-08",
+      "time": "18:59",
+      "weekday": "周四",
+      "hour": 18,
+      "bucket": "晚餐",
+      "store": "麦当劳成都万达餐厅",
+      "amount": 14.9,
+      "items": [
+        {
+          "name": "中薯条",
+          "qty": 2,
+          "matched": true,
+          "protein": 8.0,
+          "kcal": 578,
+          "sodium": 330
+        },
+        {
+          "name": "草莓麦旋风",
+          "qty": 1,
+          "matched": true,
+          "protein": 6.0,
+          "kcal": 295,
+          "sodium": 122
+        },
+        {
+          "name": "双层吉士汉堡",
+          "qty": 1,
+          "matched": true,
+          "protein": 27.0,
+          "kcal": 429,
+          "sodium": 1017
+        },
+        {
+          "name": "可乐麦炫酷",
+          "qty": 1,
+          "matched": false,
+          "protein": 0,
+          "kcal": 0,
+          "sodium": 0
+        }
+      ],
+      "protein": 41.0,
+      "kcal": 1302,
+      "fat": 55.0,
+      "sodium": 1469,
+      "matchedQty": 4,
+      "unmatchedQty": 1,
+      "coverage": 80
+    }
+  ]
+}

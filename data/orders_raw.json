@@ -1,0 +1,185 @@
+{
+  "source": {
+    "tool": "order-list",
+    "capturedAt": "2026-10-15T14:42:33",
+    "note": "麦当劳 MCP 返回的近期历史订单快照，字段与官方返回一致，未做任何修改"
+  },
+  "orders": [
+    {
+      "orderId": "ORD-0001",
+      "orderType": "1",
+      "createTime": "2026-10-08 18:59:42",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "14.9",
+      "orderProductList": [
+        {"productCode": "9900008606", "productName": "薯薯麦旋风", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "4810", "name": "中薯条", "quantity": 2},
+           {"productCode": "4900", "name": "草莓麦旋风", "quantity": 1}]},
+        {"productCode": "9900013304", "productName": "人气经典随心配", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "1120", "name": "双层吉士汉堡", "quantity": 1},
+           {"productCode": "521328", "name": "可乐麦炫酷", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0002",
+      "orderType": "1",
+      "createTime": "2026-10-07 13:24:49",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "23.9",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4810", "name": "中薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0003",
+      "orderType": "1",
+      "createTime": "2026-09-24 11:45:06",
+      "beType": "1",
+      "storeCode": "3450342",
+      "storeName": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "25.4",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4820", "name": "大薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0004",
+      "orderType": "1",
+      "createTime": "2026-09-23 11:45:36",
+      "beType": "1",
+      "storeCode": "3450342",
+      "storeName": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "23.9",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4810", "name": "中薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0005",
+      "orderType": "1",
+      "createTime": "2026-09-20 19:43:55",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "26.4",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4820", "name": "大薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0006",
+      "orderType": "1",
+      "createTime": "2026-09-20 11:45:45",
+      "beType": "1",
+      "storeCode": "3450342",
+      "storeName": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "23.9",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4810", "name": "中薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0007",
+      "orderType": "1",
+      "createTime": "2026-09-19 20:12:32",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "26.4",
+      "orderProductList": [
+        {"productCode": "9900015602", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4820", "name": "大薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0008",
+      "orderType": "1",
+      "createTime": "2026-09-08 20:00:18",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "29.4",
+      "orderProductList": [
+        {"productCode": "9900015235", "productName": "蘸酱韩式甜辣酱鸡块", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "521802", "name": "韩式甜辣酱鸡块", "quantity": 1},
+           {"productCode": "521799", "name": "日式鲜磨山葵酱", "quantity": 1}]},
+        {"productCode": "9900015732", "productName": "蘸酱脆皮鸡柳", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "521823", "name": "脆皮鸡柳", "quantity": 1},
+           {"productCode": "521799", "name": "日式鲜磨山葵酱", "quantity": 1}]}
+      ]
+    },
+    {
+      "orderId": "ORD-0009",
+      "orderType": "1",
+      "createTime": "2026-08-05 21:11:43",
+      "beType": "1",
+      "storeCode": "3450032",
+      "storeName": "麦当劳成都万达餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "27.9",
+      "orderProductList": [
+        {"productCode": "9900015234", "productName": "蘸酱麦辣大四角", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "521800", "name": "麦辣大四角", "quantity": 1},
+           {"productCode": "521799", "name": "日式鲜磨山葵酱", "quantity": 1}]},
+        {"productCode": "521836", "productName": "柠檬脆脆麦旋风", "quantity": 1, "comboItemList": []}
+      ]
+    },
+    {
+      "orderId": "ORD-0010",
+      "orderType": "1",
+      "createTime": "2026-07-21 11:55:25",
+      "beType": "1",
+      "storeCode": "3450342",
+      "storeName": "麦当劳成都高新大源东天府三街新希望国际B座餐厅",
+      "orderStatus": "订单已完成",
+      "realTotalAmount": "23.9",
+      "orderProductList": [
+        {"productCode": "9900013161", "productName": "大堡口福三件套", "quantity": 1,
+         "comboItemList": [
+           {"productCode": "520551", "name": "培根芝士双牛堡", "quantity": 1},
+           {"productCode": "4810", "name": "中薯条", "quantity": 1},
+           {"productCode": "3050", "name": "可乐中杯", "quantity": 1}]}
+      ]
+    }
+  ]
+}

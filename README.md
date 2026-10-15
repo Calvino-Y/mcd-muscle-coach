@@ -6,9 +6,11 @@
 
 说清楚「今天还差多少克蛋白」，它算出这一顿该怎么点——给你两条路线：**最省钱的**和**最清淡的**。
 
-![蛋白密度榜与蛋白性价比榜](docs/preview-full.png)
+![麦门增肌师面板](docs/preview-top.png)
 
 **在线体验（无需安装，直接拖动滑块试算）：https://calvino-y.github.io/mcd-muscle-coach/**
+
+完整面板长图：[docs/preview-full.png](docs/preview-full.png)
 
 ## 它解决什么问题
 
@@ -32,9 +34,13 @@ export MCD_MCP_TOKEN="你的 Token"        # Windows: set MCD_MCP_TOKEN=...
 
 # 2. 生成数据集（仓库里已带一份 2026-10-15 的真实快照，可跳过）
 python scripts/build_dataset.py
+python scripts/build_orders.py     # 可选：用你自己的 order-list 数据重建订单体检
 
 # 3. 求解
 python scripts/coach.py --weight 72 --factor 1.8 --consumed 40
+
+# 4. 重新生成可视化面板
+python scripts/render_dashboard.py
 ```
 
 输出：
@@ -73,12 +79,16 @@ python scripts/coach.py --weight 72 --factor 1.8 --consumed 40
 python scripts/render_dashboard.py   # 生成 docs/index.html
 ```
 
-面板包含四块：
+面板一共八块：
 
-1. **蛋白缺口计算器**——拖动体重 / 目标 / 已摄入三个滑块，实时求解，同时展示两条路线
-2. **蛋白密度榜**——每 100 kcal 能换多少蛋白质
-3. **蛋白性价比榜**——每一块钱能换多少蛋白质
-4. **蛋白 × 热量 散点图**——一眼看出哪些餐品在「高蛋白低热量」的前沿上
+1. **蛋白缺口求解器**——两种问法：按缺口补（体重/目标/已摄入三个滑块），或按预算吃（「¥30 最多能买到多少克蛋白」），并画出**预算边际收益曲线**，看钱花到哪一档开始不划算
+2. **你的真实订单体检**——接入 `order-list` 的真实历史订单，逐单对齐官方营养表，回答「你自己在麦当劳点了什么、吃进去多少蛋白、离目标差多远」
+3. **蛋白密度榜 / 蛋白性价比榜**——每 100 kcal、每一块钱各能换多少蛋白质
+4. **蛋白质量榜**——把「每 10 g 蛋白附赠多少钠、多少脂肪」单独拎出来排，可切换排序
+5. **蛋白 × 热量散点图**——一眼看出哪些餐品在「高蛋白低热量」的前沿上
+6. **点法对比表**——同样凑够 45 g 蛋白，算法组合方案 vs 单品硬点，差价一目了然
+7. **品类战力榜**——按官方原始分类聚合，看哪一类整体最能打
+8. **一周补给计划**——训练日 45 g / 休息日 25 g，七天方案与总花费，随偏好联动
 
 在线面板已部署在 GitHub Pages：https://calvino-y.github.io/mcd-muscle-coach/
 
@@ -117,20 +127,26 @@ mcd-muscle-coach/
 ├── scripts/
 │   ├── mcd_client.py             # 麦当劳 MCP 客户端（标准库，零依赖）
 │   ├── build_dataset.py          # 营养数据 + 价格 -> data/menu.json
+│   ├── build_orders.py           # 历史订单 + 营养对齐 -> data/orders.json
 │   ├── coach.py                  # 求解器 CLI
 │   ├── render_dashboard.py       # 生成 docs/index.html
 │   └── export_parity_fixture.py  # 生成对拍基准
 ├── data/
 │   ├── nutrition_raw.txt         # list-nutrition-foods 的原始响应快照
-│   └── menu.json                 # 整理后的数据集（含派生指标）
+│   ├── orders_raw.json           # order-list 的原始响应快照（orderId 已脱敏）
+│   ├── menu.json                 # 整理后的数据集（含派生指标）
+│   └── orders.json               # 逐单营养对齐结果
 ├── assets/
 │   └── dashboard-template.html   # 面板模板
 ├── docs/
-│   └── index.html                # 可视化面板（GitHub Pages）
+│   ├── index.html                # 可视化面板（GitHub Pages）
+│   ├── preview-top.png           # README 头图
+│   └── preview-full.png          # 完整面板长图
 ├── references/
 │   └── mcp-tools.md              # MCP 工具参数速查
 └── tests/
-    └── test_solver_parity.mjs    # 前后端求解器对拍
+    ├── test_solver_parity.mjs    # 前后端求解器对拍
+    └── check_page.mjs            # 页面自检（占位符/语法/数据/结构）
 ```
 
 ## 作为 WorkBuddy Skill 安装
@@ -150,9 +166,14 @@ git clone https://github.com/Calvino-Y/mcd-muscle-coach.git \
 |---|---|
 | 营养成分（能量/蛋白/脂肪/碳水/钠/钙） | `list-nutrition-foods` |
 | 实时菜单与价格 | `query-meals` |
+| 历史订单（「你的真实订单体检」板块） | `order-list` |
 | 门店解析 | `query-nearby-stores` / `delivery-query-stores` |
 
 采样门店：麦当劳成都万达餐厅（`storeCode=3450032`），采样日期 2026-10-15。
+
+**关于订单营养的诚实口径**：订单里的餐品只有一部分能在官方营养表里找到对应条目（当前快照覆盖率 55%）。
+找不到的（比如点了 7 次的「培根芝士双牛堡」）会被标为「未匹配」，该单品蛋白计 0，并在页面上写明覆盖率——
+我们宁可让数字偏小，也不拿相近餐品去估一个好看的值。
 
 ## 免责声明
 
